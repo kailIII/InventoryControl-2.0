@@ -8,10 +8,10 @@
     <packaging>jar</packaging>
 
     <name>InventoryControl</name>
-
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.candlelabs.inventory.MainApp</mainClass>
+        <mainClass>com.candlelabs.inventory.Start</mainClass>
     </properties>
     
     <organization>
