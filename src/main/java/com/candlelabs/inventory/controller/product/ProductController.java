@@ -6,8 +6,9 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 import static com.candlelabs.inventory.RMIInventory.productService;
-import com.candlelabs.inventory.model.Product;
-import java.util.List;
+import static com.candlelabs.inventory.RMIInventory.supplierService;
+import static com.candlelabs.inventory.RMIInventory.categoryService;
+import static com.candlelabs.inventory.RMIInventory.measurementService;
 
 /**
  *
@@ -20,13 +21,15 @@ public class ProductController extends ProductContainer implements Initializable
         
         try {
             
-            List<Product> listProducts = productService.listProducts();
-            
-            System.out.println(listProducts.size());
-            
-            super.initTV(listProducts);
-            
             super.initValidators();
+            
+            super.initTV(productService.listProducts());
+            
+            super.initCBs(
+                    categoryService.listCategories(), 
+                    supplierService.listSuppliers(), 
+                    measurementService.listMeasurements()
+            );
             
         } catch (RemoteException ex) {
             

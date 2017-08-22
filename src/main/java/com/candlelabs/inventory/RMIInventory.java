@@ -12,12 +12,18 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import com.candlelabs.inventory.rmi.interfaces.ProductService;
+import com.candlelabs.inventory.rmi.interfaces.SupplierService;
+import com.candlelabs.inventory.rmi.interfaces.CategoryService;
+import com.candlelabs.inventory.rmi.interfaces.MeasurementService;
 
 import static javafx.application.Application.launch;
 
 public class RMIInventory extends Application {
     
     public static ProductService productService;
+    public static SupplierService supplierService;
+    public static CategoryService categoryService;
+    public static MeasurementService measurementService;
 
     static { 
         connectServer(); 
@@ -43,6 +49,9 @@ public class RMIInventory extends Application {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             
             RMIInventory.productService = (ProductService) registry.lookup("productService");
+            RMIInventory.supplierService = (SupplierService) registry.lookup("supplierService");
+            RMIInventory.categoryService = (CategoryService) registry.lookup("categoryService");
+            RMIInventory.measurementService = (MeasurementService) registry.lookup("measurementService");
             
             System.out.println("Connected to server");
             

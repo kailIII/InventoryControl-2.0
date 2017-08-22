@@ -3,6 +3,7 @@ package com.candlelabs.inventory.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,11 +65,6 @@ public class Measurement implements Serializable {
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
-
-    @Override
-    public String toString() {
-        return this.name;
-    }
     
     @OneToMany(fetch=FetchType.LAZY, mappedBy="measurement")
     public List<Product> getProducts() {
@@ -77,6 +73,38 @@ public class Measurement implements Serializable {
     
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Measurement other = (Measurement) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
+    @Override
+    public String toString() {
+        return this.name;
     }
 
 }

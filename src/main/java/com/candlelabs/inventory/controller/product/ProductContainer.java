@@ -57,7 +57,7 @@ public class ProductContainer {
             this.productsTV.getSelectionModel().selectFirst();
         
         this.productsTV.getSelectionModel().selectedItemProperty()
-                .addListener(($obs, $old, $new) -> updateEditFields($new));
+                .addListener(($obs, $old, $new) -> updateFields($new));
         
     }
     
@@ -70,7 +70,18 @@ public class ProductContainer {
         
     }
     
-    private void updateEditFields(Product product) {
+    protected void initCBs(
+            List<Category> categories,
+            List<Supplier> suppliers,
+            List<Measurement> measurements) {
+        
+        this.categoryCB.getItems().addAll(categories);
+        this.supplierCB.getItems().addAll(suppliers);
+        this.measurementCB.getItems().addAll(measurements);
+        
+    }
+    
+    private void updateFields(Product product) {
         
         if (product != null) {
             

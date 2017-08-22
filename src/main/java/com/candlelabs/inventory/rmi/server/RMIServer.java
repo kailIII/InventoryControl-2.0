@@ -6,7 +6,9 @@ import java.rmi.registry.Registry;
 
 //Servicios a publicar
 import com.candlelabs.inventory.rmi.implementations.service.ProductServiceImpl;
-
+import com.candlelabs.inventory.rmi.implementations.service.SupplierServiceImpl;
+import com.candlelabs.inventory.rmi.implementations.service.CategoryServiceImpl;
+import com.candlelabs.inventory.rmi.implementations.service.MeasurementServiceImpl;
 
 /**
  *
@@ -19,6 +21,9 @@ public class RMIServer {
         Registry registry = LocateRegistry.createRegistry(1099);
         
         registry.rebind("productService", new ProductServiceImpl());
+        registry.rebind("supplierService", new SupplierServiceImpl());
+        registry.rebind("categoryService", new CategoryServiceImpl());
+        registry.rebind("measurementService", new MeasurementServiceImpl());
         
         System.out.println("Server started");
         
