@@ -32,7 +32,7 @@ public class RMIClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Product.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/product/Product.fxml"));
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
