@@ -14,6 +14,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,7 +24,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="828.0" prefWidth="998.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.candlelabs.inventory.controller.product.ProductController">
+<AnchorPane id="AnchorPane" prefHeight="910.0" prefWidth="998.0" style="-fx-background-color: #F5F5F5;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.candlelabs.inventory.controller.product.ProductController">
     <children>
         <AnchorPane layoutX="25.0" layoutY="14.0" prefHeight="832.0" prefWidth="752.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
@@ -33,7 +34,7 @@
                             <children>
                                 <TabPane layoutX="110.0" layoutY="99.0" prefHeight="200.0" prefWidth="200.0" rotateGraphic="true" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <tabs>
-                                        <Tab text="Información del producto">
+                                        <Tab text="Productos">
                                             <content>
                                                 <SplitPane dividerPositions="0.2594142259414226, 0.7416317991631799" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: white;">
                                                     <items>
@@ -83,16 +84,24 @@
                                                                                     <children>
                                                                                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Actualizar" />
                                                                                     </children>
-                                                               <padding>
-                                                                  <Insets left="75.0" />
-                                                               </padding>
+                                                                                    <padding>
+                                                                                        <Insets left="75.0" />
+                                                                                    </padding>
                                                                                 </HBox>
                                                                             </children>
                                                                         </VBox>
                                                                         <TableView fx:id="productsTV" layoutX="19.0" layoutY="256.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="200.0">
                                                                             <columns>
-                                                                                <TableColumn minWidth="50.0" prefWidth="89.0" text="Categoría" />
-                                                                                <TableColumn minWidth="50.0" prefWidth="135.0" text="Producto" />
+                                                                                <TableColumn minWidth="50.0" prefWidth="89.0" text="Categoría">
+                                                                                    <cellValueFactory>
+                                                                                        <PropertyValueFactory property="category" />
+                                                                                    </cellValueFactory>
+                                                                                </TableColumn>
+                                                                                <TableColumn minWidth="50.0" prefWidth="135.0" text="Producto">
+                                                                                    <cellValueFactory>
+                                                                                        <PropertyValueFactory property="name" />
+                                                                                    </cellValueFactory>
+                                                                                </TableColumn>
                                                                             </columns>
                                                                         </TableView>
                                                                     </children>
@@ -108,32 +117,32 @@
                                                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                             </padding>
                                                                             <content>
-                                                                                <VBox alignment="CENTER" prefWidth="435.0" spacing="25.0" style="-fx-background-color: white;">
+                                                                                <VBox alignment="CENTER" prefHeight="711.0" prefWidth="435.0" spacing="25.0" style="-fx-background-color: white;">
                                                                                     <children>
                                                                                         <Label alignment="CENTER" prefHeight="54.0" prefWidth="361.0" text="Datos del producto" textFill="#00000052">
                                                                                             <font>
                                                                                                 <Font name="System Bold" size="37.0" />
                                                                                             </font>
                                                                                         </Label>
-                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
-                                                                     <children>
-                                                                        <MaterialDesignIconView glyphName="LABEL_OUTLINE" size="22.0">
-                                                                           <fill>
-                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                                                                 <stops>
-                                                                                    <Stop color="#949494" />
-                                                                                    <Stop color="WHITE" offset="1.0" />
-                                                                                 </stops>
-                                                                              </LinearGradient>
-                                                                           </fill>
-                                                                        </MaterialDesignIconView>
-                                                                        <Label prefHeight="20.0" prefWidth="350.0" text="Editando producto" textFill="#4596d9">
-                                                                           <font>
-                                                                              <Font name="System Bold" size="14.0" />
-                                                                           </font>
-                                                                        </Label>
-                                                                     </children>
-                                                                  </HBox>
+                                                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                                            <children>
+                                                                                                <MaterialDesignIconView glyphName="LABEL_OUTLINE" size="22.0">
+                                                                                                    <fill>
+                                                                                                        <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                                            <stops>
+                                                                                                                <Stop color="#949494" />
+                                                                                                                <Stop color="WHITE" offset="1.0" />
+                                                                                                            </stops>
+                                                                                                        </LinearGradient>
+                                                                                                    </fill>
+                                                                                                </MaterialDesignIconView>
+                                                                                                <Label fx:id="infoL" prefHeight="20.0" prefWidth="350.0" text="Visualizando producto" textFill="#4596d9">
+                                                                                                    <font>
+                                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                                    </font>
+                                                                                                </Label>
+                                                                                            </children>
+                                                                                        </HBox>
                                                                                         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
                                                                                             <children>
                                                                                                 <MaterialDesignIconView glyphName="LABEL" size="22.0">
@@ -153,113 +162,109 @@
                                                                                                 </JFXTextField>
                                                                                             </children>
                                                                                         </HBox>
-                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
-                                                                     <children>
-                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
-                                                                           <fill>
-                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                                                                 <stops>
-                                                                                    <Stop color="#949494" />
-                                                                                    <Stop color="WHITE" offset="1.0" />
-                                                                                 </stops>
-                                                                              </LinearGradient>
-                                                                           </fill>
-                                                                        </MaterialDesignIconView>
-                                                                        <JFXTextField fx:id="descriptionTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
-                                                                           <font>
-                                                                              <Font size="14.0" />
-                                                                           </font>
-                                                                        </JFXTextField>
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
-                                                                     <children>
-                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
-                                                                           <fill>
-                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                                                                 <stops>
-                                                                                    <Stop color="#949494" />
-                                                                                    <Stop color="WHITE" offset="1.0" />
-                                                                                 </stops>
-                                                                              </LinearGradient>
-                                                                           </fill>
-                                                                        </MaterialDesignIconView>
-                                                                        <JFXTextField fx:id="priceTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
-                                                                           <font>
-                                                                              <Font size="14.0" />
-                                                                           </font>
-                                                                        </JFXTextField>
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
-                                                                     <children>
-                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
-                                                                           <fill>
-                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                                                                 <stops>
-                                                                                    <Stop color="#949494" />
-                                                                                    <Stop color="WHITE" offset="1.0" />
-                                                                                 </stops>
-                                                                              </LinearGradient>
-                                                                           </fill>
-                                                                        </MaterialDesignIconView>
-                                                                        <JFXTextField fx:id="brandTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
-                                                                           <font>
-                                                                              <Font size="14.0" />
-                                                                           </font>
-                                                                        </JFXTextField>
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
-                                                                     <children>
-                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
-                                                                           <fill>
-                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                                                                 <stops>
-                                                                                    <Stop color="#949494" />
-                                                                                    <Stop color="WHITE" offset="1.0" />
-                                                                                 </stops>
-                                                                              </LinearGradient>
-                                                                           </fill>
-                                                                        </MaterialDesignIconView>
-                                                                        <JFXComboBox fx:id="measurementCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Unidad de medida" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
-                                                                     <children>
-                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
-                                                                           <fill>
-                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                                                                 <stops>
-                                                                                    <Stop color="#949494" />
-                                                                                    <Stop color="WHITE" offset="1.0" />
-                                                                                 </stops>
-                                                                              </LinearGradient>
-                                                                           </fill>
-                                                                        </MaterialDesignIconView>
-                                                                        <JFXComboBox fx:id="categoryCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Categoría" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
-                                                                     <children>
-                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
-                                                                           <fill>
-                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                                                                 <stops>
-                                                                                    <Stop color="#949494" />
-                                                                                    <Stop color="WHITE" offset="1.0" />
-                                                                                 </stops>
-                                                                              </LinearGradient>
-                                                                           </fill>
-                                                                        </MaterialDesignIconView>
-                                                                        <JFXComboBox fx:id="supplierCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Proveedor" />
-                                                                     </children>
-                                                                  </HBox>
-                                                                                        <JFXButton prefHeight="45.0" prefWidth="218.0" ripplerFill="#2f9bff" style="-fx-border-color: #2099f5; -fx-border-width: 0.8px;" text="Finalizar registro">
-                                                                                            <font>
-                                                                                                <Font size="16.0" />
-                                                                                            </font>
-                                                                                        </JFXButton>
+                                                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                                            <children>
+                                                                                                <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                                                    <fill>
+                                                                                                        <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                                            <stops>
+                                                                                                                <Stop color="#949494" />
+                                                                                                                <Stop color="WHITE" offset="1.0" />
+                                                                                                            </stops>
+                                                                                                        </LinearGradient>
+                                                                                                    </fill>
+                                                                                                </MaterialDesignIconView>
+                                                                                                <JFXTextField fx:id="descriptionTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
+                                                                                                    <font>
+                                                                                                        <Font size="14.0" />
+                                                                                                    </font>
+                                                                                                </JFXTextField>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                                            <children>
+                                                                                                <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                                                    <fill>
+                                                                                                        <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                                            <stops>
+                                                                                                                <Stop color="#949494" />
+                                                                                                                <Stop color="WHITE" offset="1.0" />
+                                                                                                            </stops>
+                                                                                                        </LinearGradient>
+                                                                                                    </fill>
+                                                                                                </MaterialDesignIconView>
+                                                                                                <JFXTextField fx:id="priceTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
+                                                                                                    <font>
+                                                                                                        <Font size="14.0" />
+                                                                                                    </font>
+                                                                                                </JFXTextField>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                                            <children>
+                                                                                                <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                                                    <fill>
+                                                                                                        <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                                            <stops>
+                                                                                                                <Stop color="#949494" />
+                                                                                                                <Stop color="WHITE" offset="1.0" />
+                                                                                                            </stops>
+                                                                                                        </LinearGradient>
+                                                                                                    </fill>
+                                                                                                </MaterialDesignIconView>
+                                                                                                <JFXTextField fx:id="brandTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
+                                                                                                    <font>
+                                                                                                        <Font size="14.0" />
+                                                                                                    </font>
+                                                                                                </JFXTextField>
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                                            <children>
+                                                                                                <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                                                    <fill>
+                                                                                                        <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                                            <stops>
+                                                                                                                <Stop color="#949494" />
+                                                                                                                <Stop color="WHITE" offset="1.0" />
+                                                                                                            </stops>
+                                                                                                        </LinearGradient>
+                                                                                                    </fill>
+                                                                                                </MaterialDesignIconView>
+                                                                                                <JFXComboBox fx:id="measurementCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Unidad de medida" />
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                                            <children>
+                                                                                                <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                                                    <fill>
+                                                                                                        <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                                            <stops>
+                                                                                                                <Stop color="#949494" />
+                                                                                                                <Stop color="WHITE" offset="1.0" />
+                                                                                                            </stops>
+                                                                                                        </LinearGradient>
+                                                                                                    </fill>
+                                                                                                </MaterialDesignIconView>
+                                                                                                <JFXComboBox fx:id="categoryCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Categoría" />
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                                            <children>
+                                                                                                <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                                                    <fill>
+                                                                                                        <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                                            <stops>
+                                                                                                                <Stop color="#949494" />
+                                                                                                                <Stop color="WHITE" offset="1.0" />
+                                                                                                            </stops>
+                                                                                                        </LinearGradient>
+                                                                                                    </fill>
+                                                                                                </MaterialDesignIconView>
+                                                                                                <JFXComboBox fx:id="supplierCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Proveedor" />
+                                                                                            </children>
+                                                                                        </HBox>
+                                                                                        <JFXButton prefHeight="45.0" prefWidth="218.0" ripplerFill="#2f9bff" style="-fx-border-color: #2099f5; -fx-border-width: 0.8px;" text="Finalizar registro"/>
                                                                                     </children>
                                                                                     <padding>
                                                                                         <Insets bottom="20.0" top="20.0" />
@@ -269,7 +274,7 @@
                                                                         </ScrollPane>
                                                                         <ToolBar layoutX="14.0" layoutY="5.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                             <items>
-                                                                                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Nuevo">
+                                                                                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Nuevo">
                                                                                     <graphic>
                                                                                         <MaterialDesignIconView glyphName="LOUPE" size="20.0">
                                                                                             <fill>
@@ -283,23 +288,9 @@
                                                                                         </MaterialDesignIconView>
                                                                                     </graphic>
                                                                                 </Button>
-                                                                                <Button mnemonicParsing="false" text="Guardar">
-                                                                                    <graphic>
-                                                                                        <MaterialDesignIconView glyphName="LOUPE" size="20.0">
-                                                                                            <fill>
-                                                                                                <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
-                                                                                                    <stops>
-                                                                                                        <Stop color="BLACK" />
-                                                                                                        <Stop color="WHITE" offset="1.0" />
-                                                                                                    </stops>
-                                                                                                </LinearGradient>
-                                                                                            </fill>
-                                                                                        </MaterialDesignIconView>
-                                                                                    </graphic>
-                                                                                </Button>
-                                                            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="87.0" text="Eliminar">
+                                                            <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="90.0" text="Editar">
                                                                <graphic>
-                                                                  <MaterialDesignIconView glyphName="DELETE" size="20.0">
+                                                                  <MaterialDesignIconView glyphName="APPLE" size="20.0">
                                                                      <fill>
                                                                         <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
                                                                            <stops>
@@ -311,6 +302,34 @@
                                                                   </MaterialDesignIconView>
                                                                </graphic>
                                                             </Button>
+                                                                                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Eliminar">
+                                                                                    <graphic>
+                                                                                        <MaterialDesignIconView glyphName="DELETE" size="20.0">
+                                                                                            <fill>
+                                                                                                <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
+                                                                                                    <stops>
+                                                                                                        <Stop color="BLACK" />
+                                                                                                        <Stop color="WHITE" offset="1.0" />
+                                                                                                    </stops>
+                                                                                                </LinearGradient>
+                                                                                            </fill>
+                                                                                        </MaterialDesignIconView>
+                                                                                    </graphic>
+                                                                                </Button>
+                                                                                <Button mnemonicParsing="false" prefWidth="90.0" text="Guardar">
+                                                                                    <graphic>
+                                                                                        <MaterialDesignIconView glyphName="LOUPE" size="20.0">
+                                                                                            <fill>
+                                                                                                <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
+                                                                                                    <stops>
+                                                                                                        <Stop color="BLACK" />
+                                                                                                        <Stop color="WHITE" offset="1.0" />
+                                                                                                    </stops>
+                                                                                                </LinearGradient>
+                                                                                            </fill>
+                                                                                        </MaterialDesignIconView>
+                                                                                    </graphic>
+                                                                                </Button>
                                                                             </items>
                                                                         </ToolBar>
                                                                     </children>
@@ -353,7 +372,7 @@
                                                                                 </HBox>
                                                                                 <ImageView fitHeight="150.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
                                                                                     <image>
-                                                                                        <Image url="@../img/barcode.jpg" />
+                                                                                        <Image url="@../../img/barcode.jpg" />
                                                                                     </image>
                                                                                 </ImageView>
                                                                             </children>
@@ -368,7 +387,17 @@
                                         </Tab>
                                         <Tab text="Categorías">
                                             <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                <AnchorPane fx:id="categoryPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                            </content>
+                                        </Tab>
+                                        <Tab text="Proveedores">
+                                            <content>
+                                                <AnchorPane fx:id="supplierPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                            </content>
+                                        </Tab>
+                                        <Tab text="Unidades de medida">
+                                            <content>
+                                                <AnchorPane fx:id="measurementPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                             </content>
                                         </Tab>
                                     </tabs>

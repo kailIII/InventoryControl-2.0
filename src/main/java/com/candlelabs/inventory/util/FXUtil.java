@@ -1,9 +1,13 @@
 package com.candlelabs.inventory.util;
 
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -66,6 +70,21 @@ public class FXUtil {
         }
         
         return object.toString();
+    }
+    
+    public static FXMLLoader loader(String fxml, Class clazz) throws IOException {
+        return new FXMLLoader(clazz.getResource(fxml));
+    }
+    
+    public static void setAnchor(AnchorPane anchorPane) {
+        AnchorPane.setTopAnchor(anchorPane, 0.0);
+        AnchorPane.setBottomAnchor(anchorPane, 0.0);
+        AnchorPane.setLeftAnchor(anchorPane, 0.0);
+        AnchorPane.setRightAnchor(anchorPane, 0.0);
+    }
+    
+    public static <T> T selectedTableItem(TableView<T> tableView) {
+        return tableView.getSelectionModel().getSelectedItem();
     }
     
 }

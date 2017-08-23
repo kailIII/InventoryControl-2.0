@@ -1,14 +1,27 @@
 package com.candlelabs.inventory.controller.product;
 
 import java.net.URL;
+import java.io.IOException;
+
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
 
 import static com.candlelabs.inventory.RMIClient.productService;
-import static com.candlelabs.inventory.RMIClient.supplierService;
 import static com.candlelabs.inventory.RMIClient.categoryService;
+import static com.candlelabs.inventory.RMIClient.supplierService;
 import static com.candlelabs.inventory.RMIClient.measurementService;
+
+import com.candlelabs.inventory.controller.category.CategoryController;
+import com.candlelabs.inventory.controller.supplier.SupplierController;
+import com.candlelabs.inventory.controller.measurement.MeasurementController;
+
+import com.candlelabs.inventory.controller.interfaces.ProductInitializer;
+
+import com.candlelabs.inventory.util.FXUtil;
+
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -31,9 +44,47 @@ public class ProductController extends ProductContainer implements Initializable
                     measurementService.listMeasurements()
             );
             
+            this.initViews();
+            
         } catch (RemoteException ex) {
             
             System.out.println("Exception: " + ex.toString());
+            
+        }
+        
+    }
+    
+    private void initViews() {
+        
+        this.initView(
+                "/view/category/Category.fxml",
+                CategoryController.class, this.getCategoryPane());
+        
+        this.initView(
+                "/view/supplier/Supplier.fxml", 
+                SupplierController.class, this.getSupplierPane());
+        
+        this.initView(
+                "/view/measurement/Measurement.fxml", 
+                MeasurementController.class, this.getMeasurementPane());
+        
+    }
+    
+    private <T extends ProductInitializer> void initView(
+            String fxml, Class<T> clazz, AnchorPane pane) {
+        
+        try {
+            
+            FXMLLoader loader = FXUtil.loader(fxml, getClass());
+            
+            AnchorPane anchorPane = loader.<AnchorPane>load();
+            loader.<T>getController().init(this);
+            
+            FXUtil.setAnchor(anchorPane);
+            
+            pane.getChildren().setAll(anchorPane);
+            
+        } catch (IOException ex) {
             
         }
         

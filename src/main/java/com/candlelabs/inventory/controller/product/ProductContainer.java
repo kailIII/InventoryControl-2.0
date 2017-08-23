@@ -1,8 +1,13 @@
 package com.candlelabs.inventory.controller.product;
 
 import javafx.fxml.FXML;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.List;
 
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXComboBox;
@@ -13,15 +18,16 @@ import com.candlelabs.inventory.model.Product;
 import com.candlelabs.inventory.model.Supplier;
 import com.candlelabs.inventory.util.FXUtil;
 import com.candlelabs.inventory.util.ValidatorUtil;
-import java.util.List;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 
 /**
  *
  * @author Arturo Cordero
  */
 public class ProductContainer {
+    
+    @FXML
+    private Label infoL;
     
     @FXML
     private TableView<Product> productsTV;
@@ -31,12 +37,18 @@ public class ProductContainer {
     
     @FXML
     private JFXComboBox<Measurement> measurementCB;
+    private ObservableList<Measurement> measurements = FXCollections.observableArrayList();
     
     @FXML
     private JFXComboBox<Category> categoryCB;
+    private ObservableList<Category> categories = FXCollections.observableArrayList();
     
     @FXML
     private JFXComboBox<Supplier> supplierCB;
+    private ObservableList<Supplier> suppliers = FXCollections.observableArrayList();
+    
+    @FXML
+    private AnchorPane categoryPane, supplierPane, measurementPane;
     
     private ObservableList<Product> productList;
     
@@ -53,8 +65,10 @@ public class ProductContainer {
         this.productsTV.setItems(this.productList);
         this.productList.addAll(productList);
         
-        if (!this.productList.isEmpty())
+        if (!this.productList.isEmpty()) {
             this.productsTV.getSelectionModel().selectFirst();
+            this.updateFields(FXUtil.selectedTableItem(this.productsTV));
+        }
         
         this.productsTV.getSelectionModel().selectedItemProperty()
                 .addListener(($obs, $old, $new) -> updateFields($new));
@@ -75,10 +89,13 @@ public class ProductContainer {
             List<Supplier> suppliers,
             List<Measurement> measurements) {
         
-        this.categoryCB.getItems().addAll(categories);
-        this.supplierCB.getItems().addAll(suppliers);
-        this.measurementCB.getItems().addAll(measurements);
+        this.categories.setAll(categories);
+        this.suppliers.setAll(suppliers);
+        this.measurements.setAll(measurements);
         
+        this.categoryCB.setItems(this.categories);
+        this.supplierCB.setItems(this.suppliers);
+        this.measurementCB.setItems(this.measurements);
     }
     
     private void updateFields(Product product) {
@@ -96,6 +113,30 @@ public class ProductContainer {
             
         }
         
+    }
+
+    public AnchorPane getCategoryPane() {
+        return categoryPane;
+    }
+
+    public AnchorPane getSupplierPane() {
+        return supplierPane;
+    }
+
+    public AnchorPane getMeasurementPane() {
+        return measurementPane;
+    }
+
+    public ObservableList<Measurement> getMeasurements() {
+        return measurements;
+    }
+
+    public ObservableList<Category> getCategories() {
+        return categories;
+    }
+
+    public ObservableList<Supplier> getSuppliers() {
+        return suppliers;
     }
     
 }
