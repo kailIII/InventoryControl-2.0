@@ -39,19 +39,22 @@ public class Product implements Serializable {
         this.unitPrice = unitPrice;
     }
     
-    public Product(Category category, String code, String description, 
-            String name, double unitPrice, String brand, Supplier supplier, 
-            Integer reorderLevel, Integer unitsInStock) {
+    public Product(
+            String code, String description, 
+            String name, double unitPrice, String brand,
+            Integer reorderLevel, Integer unitsInStock, 
+            Category category, Supplier supplier, Measurement measurement) {
         
-        this.category = category;
         this.code = code;
         this.description = description;
         this.name = name;
         this.unitPrice = unitPrice;
         this.brand = brand;
-        this.supplier = supplier;
         this.reorderLevel = reorderLevel;
         this.unitsInStock = unitsInStock;
+        this.category = category;
+        this.supplier = supplier;
+        this.measurement = measurement;
     }
     
     @Id
@@ -177,10 +180,16 @@ public class Product implements Serializable {
             return false;
         }
         final Product other = (Product) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        
+        return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "id=" + id + ", code=" + code + ", description=" + description + ", "
+                + "name=" + name + ", unitPrice=" + unitPrice + ", brand=" + brand + ", "
+                + "reorderLevel=" + reorderLevel + ", unitsInStock=" + unitsInStock + ", "
+                + "category=" + category + ", supplier=" + supplier + ", measurement=" + measurement + '}';
     }
     
 }

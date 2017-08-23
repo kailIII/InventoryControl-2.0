@@ -33,7 +33,8 @@ public class ProductContainer {
     private TableView<Product> productsTV;
     
     @FXML
-    private JFXTextField nameTF, descriptionTF, priceTF, brandTF;
+    private JFXTextField nameTF, descriptionTF, unitPriceTF, 
+            brandTF, reorderLevelTF, unitsInStockTF;
     
     @FXML
     private JFXComboBox<Measurement> measurementCB;
@@ -78,7 +79,7 @@ public class ProductContainer {
     protected void initValidators() {
         
         this.validator = new ValidatorUtil(
-                nameTF, descriptionTF, priceTF, brandTF, 
+                nameTF, descriptionTF, unitPriceTF, brandTF, 
                 categoryCB, supplierCB, measurementCB
         );
         
@@ -104,7 +105,7 @@ public class ProductContainer {
             
             this.nameTF.setText(FXUtil.objectStringValue(product.getName()));
             this.descriptionTF.setText(FXUtil.objectStringValue(product.getDescription()));
-            this.priceTF.setText(FXUtil.objectStringValue(product.getUnitPrice()));
+            this.unitPriceTF.setText(FXUtil.objectStringValue(product.getUnitPrice()));
             this.brandTF.setText(FXUtil.objectStringValue(product.getBrand()));
             
             this.categoryCB.setValue(product.getCategory());
@@ -112,6 +113,35 @@ public class ProductContainer {
             this.measurementCB.setValue(product.getMeasurement());
             
         }
+        
+    }
+    
+    protected Product getProduct() {
+        
+        return new Product(
+                
+                "", // -> Generar código? 
+                
+                /**
+                 * 
+                 * Todo correcto
+                 * 
+                 */
+                this.descriptionTF.getText(), 
+                this.nameTF.getText(), 
+                
+                Double.parseDouble(this.unitPriceTF.getText()), 
+                
+                this.brandTF.getText(), 
+                
+                Integer.parseInt(this.reorderLevelTF.getText()), 
+                Integer.parseInt(this.unitsInStockTF.getText()), 
+                
+                this.categoryCB.getValue(), 
+                this.supplierCB.getValue(), 
+                this.measurementCB.getValue()
+                
+        );
         
     }
 
@@ -137,6 +167,10 @@ public class ProductContainer {
 
     public ObservableList<Supplier> getSuppliers() {
         return suppliers;
+    }
+
+    public ValidatorUtil getValidator() {
+        return validator;
     }
     
 }

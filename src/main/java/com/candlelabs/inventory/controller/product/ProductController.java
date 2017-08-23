@@ -16,11 +16,15 @@ import com.candlelabs.inventory.controller.supplier.SupplierController;
 import com.candlelabs.inventory.controller.measurement.MeasurementController;
 
 import com.candlelabs.inventory.controller.interfaces.ProductInitializer;
+import com.candlelabs.inventory.model.Product;
 
 import com.candlelabs.inventory.util.FXUtil;
+import javafx.fxml.FXML;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -49,6 +53,26 @@ public class ProductController extends ProductContainer implements Initializable
         } catch (RemoteException ex) {
             
             System.out.println("Exception: " + ex.toString());
+            
+        }
+        
+    }
+    
+    @FXML
+    private void createProduct() {
+        
+        if (getValidator().validateFields()) {
+            
+            Product product = getProduct();
+            
+            new Alert(
+                    AlertType.INFORMATION,
+                    product.toString()
+            ).showAndWait();
+            
+        } else {
+            
+            getValidator().emptyFields().show();
             
         }
         

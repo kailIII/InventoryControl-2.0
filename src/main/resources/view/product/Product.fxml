@@ -36,7 +36,7 @@
                                     <tabs>
                                         <Tab text="Productos">
                                             <content>
-                                                <SplitPane dividerPositions="0.2594142259414226, 0.7416317991631799" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: white;">
+                                                <SplitPane dividerPositions="0.2688284518828452, 0.7416317991631799" prefHeight="160.0" prefWidth="200.0" style="-fx-background-color: white;">
                                                     <items>
                                                         <AnchorPane minHeight="0.0" minWidth="20.0" prefHeight="160.0" prefWidth="100.0">
                                                             <children>
@@ -67,18 +67,18 @@
                                                                                         <Label text="Categoría:" />
                                                                                         <JFXTextField focusColor="#2099f5" />
                                                                                     </children>
-                                                                                    <padding>
-                                                                                        <Insets right="25.0" />
-                                                                                    </padding>
+                                                               <VBox.margin>
+                                                                  <Insets right="25.0" />
+                                                               </VBox.margin>
                                                                                 </HBox>
                                                                                 <HBox alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
                                                                                     <children>
-                                                                                        <Label text="Categoría:" />
+                                                                                        <Label text="Descripción:" />
                                                                                         <JFXTextField focusColor="#2099f5" />
                                                                                     </children>
-                                                                                    <padding>
-                                                                                        <Insets right="25.0" />
-                                                                                    </padding>
+                                                               <VBox.margin>
+                                                                  <Insets right="25.0" />
+                                                               </VBox.margin>
                                                                                 </HBox>
                                                                                 <HBox alignment="CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
                                                                                     <children>
@@ -117,7 +117,7 @@
                                                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                             </padding>
                                                                             <content>
-                                                                                <VBox alignment="CENTER" prefHeight="711.0" prefWidth="435.0" spacing="25.0" style="-fx-background-color: white;">
+                                                                                <VBox alignment="CENTER" prefHeight="743.0" prefWidth="435.0" spacing="25.0" style="-fx-background-color: white;">
                                                                                     <children>
                                                                                         <Label alignment="CENTER" prefHeight="54.0" prefWidth="361.0" text="Datos del producto" textFill="#00000052">
                                                                                             <font>
@@ -193,7 +193,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="priceTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
+                                                                                                <JFXTextField fx:id="unitPriceTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -219,6 +219,44 @@
                                                                                                 </JFXTextField>
                                                                                             </children>
                                                                                         </HBox>
+                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                     <children>
+                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                           <fill>
+                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                 <stops>
+                                                                                    <Stop color="#949494" />
+                                                                                    <Stop color="WHITE" offset="1.0" />
+                                                                                 </stops>
+                                                                              </LinearGradient>
+                                                                           </fill>
+                                                                        </MaterialDesignIconView>
+                                                                        <JFXTextField fx:id="reorderLevelTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nivel de reordenamiento">
+                                                                           <font>
+                                                                              <Font size="14.0" />
+                                                                           </font>
+                                                                        </JFXTextField>
+                                                                     </children>
+                                                                  </HBox>
+                                                                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
+                                                                     <children>
+                                                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                                                           <fill>
+                                                                              <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                                                 <stops>
+                                                                                    <Stop color="#949494" />
+                                                                                    <Stop color="WHITE" offset="1.0" />
+                                                                                 </stops>
+                                                                              </LinearGradient>
+                                                                           </fill>
+                                                                        </MaterialDesignIconView>
+                                                                        <JFXTextField fx:id="unitsInStockTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Cantidad por defecto">
+                                                                           <font>
+                                                                              <Font size="14.0" />
+                                                                           </font>
+                                                                        </JFXTextField>
+                                                                     </children>
+                                                                  </HBox>
                                                                                         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
                                                                                             <children>
                                                                                                 <MaterialDesignIconView glyphName="LABEL" size="22.0">
@@ -264,7 +302,7 @@
                                                                                                 <JFXComboBox fx:id="supplierCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Proveedor" />
                                                                                             </children>
                                                                                         </HBox>
-                                                                                        <JFXButton prefHeight="45.0" prefWidth="218.0" ripplerFill="#2f9bff" style="-fx-border-color: #2099f5; -fx-border-width: 0.8px;" text="Finalizar registro"/>
+                                                                                        <JFXButton onAction="#createProduct" prefHeight="45.0" prefWidth="218.0" ripplerFill="#2f9bff" style="-fx-border-color: #2099f5; -fx-border-width: 0.8px;" text="Finalizar registro" />
                                                                                     </children>
                                                                                     <padding>
                                                                                         <Insets bottom="20.0" top="20.0" />
