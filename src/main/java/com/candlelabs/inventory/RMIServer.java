@@ -1,4 +1,4 @@
-package com.candlelabs.inventory.rmi.server;
+package com.candlelabs.inventory;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

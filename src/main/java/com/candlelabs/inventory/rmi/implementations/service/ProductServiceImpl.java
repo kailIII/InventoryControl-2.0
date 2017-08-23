@@ -2,7 +2,7 @@ package com.candlelabs.inventory.rmi.implementations.service;
 
 import com.candlelabs.inventory.model.Product;
 import com.candlelabs.inventory.persistence.dao.ProductDao;
-import com.candlelabs.inventory.rmi.interfaces.ProductService;
+import com.candlelabs.inventory.rmi.interfaces.service.ProductService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;

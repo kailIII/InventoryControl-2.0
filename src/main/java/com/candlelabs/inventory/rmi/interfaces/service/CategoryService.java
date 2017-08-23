@@ -1,4 +1,4 @@
-package com.candlelabs.inventory.rmi.interfaces;
+package com.candlelabs.inventory.rmi.interfaces.service;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

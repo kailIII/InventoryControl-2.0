@@ -5,10 +5,10 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
-import static com.candlelabs.inventory.RMIInventory.productService;
-import static com.candlelabs.inventory.RMIInventory.supplierService;
-import static com.candlelabs.inventory.RMIInventory.categoryService;
-import static com.candlelabs.inventory.RMIInventory.measurementService;
+import static com.candlelabs.inventory.RMIClient.productService;
+import static com.candlelabs.inventory.RMIClient.supplierService;
+import static com.candlelabs.inventory.RMIClient.categoryService;
+import static com.candlelabs.inventory.RMIClient.measurementService;
 
 /**
  *

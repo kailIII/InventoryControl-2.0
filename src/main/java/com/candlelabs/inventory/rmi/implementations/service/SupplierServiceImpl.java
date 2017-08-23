@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.candlelabs.inventory.model.Supplier;
 import com.candlelabs.inventory.persistence.dao.SupplierDao;
-import com.candlelabs.inventory.rmi.interfaces.SupplierService;
+import com.candlelabs.inventory.rmi.interfaces.service.SupplierService;
 
 /**
  *

@@ -14,7 +14,6 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.candlelabs.inventory.rmi.server.RMIServer</mainClass>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -75,7 +74,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>8.8.3</version>
                 <configuration>
-                    <mainClass>com.candlelabs.inventory.rmi.server.RMIServer</mainClass>
+                    <mainClass>com.candlelabs.inventory.RMIServer</mainClass>
                 </configuration>
             </plugin>
         </plugins>

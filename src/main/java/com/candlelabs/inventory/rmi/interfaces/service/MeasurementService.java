@@ -1,4 +1,4 @@
-package com.candlelabs.inventory.rmi.interfaces;
+package com.candlelabs.inventory.rmi.interfaces.service;
 
 import com.candlelabs.inventory.model.Measurement;
 import java.rmi.Remote;

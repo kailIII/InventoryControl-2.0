@@ -11,14 +11,14 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import com.candlelabs.inventory.rmi.interfaces.ProductService;
-import com.candlelabs.inventory.rmi.interfaces.SupplierService;
-import com.candlelabs.inventory.rmi.interfaces.CategoryService;
-import com.candlelabs.inventory.rmi.interfaces.MeasurementService;
+import com.candlelabs.inventory.rmi.interfaces.service.ProductService;
+import com.candlelabs.inventory.rmi.interfaces.service.SupplierService;
+import com.candlelabs.inventory.rmi.interfaces.service.CategoryService;
+import com.candlelabs.inventory.rmi.interfaces.service.MeasurementService;
 
 import static javafx.application.Application.launch;
 
-public class RMIInventory extends Application {
+public class RMIClient extends Application {
     
     public static ProductService productService;
     public static SupplierService supplierService;
@@ -48,10 +48,10 @@ public class RMIInventory extends Application {
             
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             
-            RMIInventory.productService = (ProductService) registry.lookup("productService");
-            RMIInventory.supplierService = (SupplierService) registry.lookup("supplierService");
-            RMIInventory.categoryService = (CategoryService) registry.lookup("categoryService");
-            RMIInventory.measurementService = (MeasurementService) registry.lookup("measurementService");
+            RMIClient.productService = (ProductService) registry.lookup("productService");
+            RMIClient.supplierService = (SupplierService) registry.lookup("supplierService");
+            RMIClient.categoryService = (CategoryService) registry.lookup("categoryService");
+            RMIClient.measurementService = (MeasurementService) registry.lookup("measurementService");
             
             System.out.println("Connected to server");
             

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.candlelabs.inventory.model.Category;
 import com.candlelabs.inventory.persistence.dao.CategoryDao;
-import com.candlelabs.inventory.rmi.interfaces.CategoryService;
+import com.candlelabs.inventory.rmi.interfaces.service.CategoryService;
 
 /**
  *

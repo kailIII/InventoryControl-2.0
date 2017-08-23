@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.candlelabs.inventory.model.Measurement;
 import com.candlelabs.inventory.persistence.dao.MeasurementDao;
-import com.candlelabs.inventory.rmi.interfaces.MeasurementService;
+import com.candlelabs.inventory.rmi.interfaces.service.MeasurementService;
 
 /**
  *
