@@ -9,6 +9,8 @@ import java.util.Hashtable;
 
 import com.candlelabs.inventory.rmi.interfaces.service.MessageResponder;
 import com.candlelabs.inventory.rmi.interfaces.service.ServerResponder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -21,36 +23,35 @@ public class CallbackServerImpl extends UnicastRemoteObject
     
     private final String serverName;
 
-    private final Hashtable<String, PermissionMessageResponder> nameReceiver = new Hashtable<>();
+    private final Map<String, PermissionMessageResponder> nameReceiver;
 
     public CallbackServerImpl(String serverName) throws RemoteException {
         
         super();
         
+        this.nameReceiver = new HashMap<>();
+        
         this.serverName = serverName;
         
-        System.out.println("New Callback Server");
     }
-
+    
     @Override
     public void register(MessageResponder receiver) throws RemoteException {
         
         int i = 0;
-        while (containsName(receiver.getName())) {
-            receiver.renameIfExist(receiver.getName() + i);
+        
+        while (this.nameReceiver.containsKey(receiver.getName())) {
+            receiver.setName(receiver.getName() + "_" + i);
             i++;
         }
         
-        this.nameReceiver.put(receiver.getName(),
-                new PermissionMessageResponder(this, receiver));
+        System.out.println(receiver.getName());
         
-        receiver.sendMessageToClient("Connected \nWelcome to THM-IRC-Network - " + this.serverName);
+        this.nameReceiver.put(receiver.getName(), new PermissionMessageResponder(this, receiver));
         
-        sendMessage(receiver, "Connected");
-    }
-    
-    public boolean containsName(String name) {
-        return nameReceiver.containsKey(name);
+        receiver.sendMessageToClient("Connected - Welcome to CandleLabs - " + this.serverName);
+        receiver.sendMessageToClient("You're " + receiver.getName());
+        
     }
     
     @Override
@@ -68,13 +69,24 @@ public class CallbackServerImpl extends UnicastRemoteObject
     @Override
     public void sendMessage(MessageResponder sender, String message) throws RemoteException {
         
-        sender.sendMessageToClient("Command not found");
+        this.nameReceiver.values().forEach((PermissionMessageResponder receiver) -> {
+            
+            try {
+                
+                receiver.getMessageResponder().sendMessageToClient(message);
+                
+            } catch (RemoteException ex) {
+                
+            }
+            
+        });
+        
     }
 
     @Override
     public void quit() throws RemoteException {
         
-        String message = "Server CLosed";
+        String message = "Server Closed";
         
         for (PermissionMessageResponder connectedUser : nameReceiver.values()) {
             connectedUser.disconnect(message);

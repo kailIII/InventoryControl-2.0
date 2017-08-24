@@ -48,9 +48,20 @@ Contributor(s):
         <property name="hibernate.connection.password">jaqart_56923</property>
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
+        
         <mapping class="com.candlelabs.inventory.model.Product"/>
         <mapping class="com.candlelabs.inventory.model.Measurement"/>
         <mapping class="com.candlelabs.inventory.model.Supplier"/>
         <mapping class="com.candlelabs.inventory.model.Category"/>
+        
+        <mapping class="com.candlelabs.inventory.model.User"/>
+        <mapping class="com.candlelabs.inventory.model.UserStore"/>
+        <mapping class="com.candlelabs.inventory.model.UserStoreId"/>
+        
+        <mapping class="com.candlelabs.inventory.model.Store"/>
+        <mapping class="com.candlelabs.inventory.model.Product"/>
+        <mapping class="com.candlelabs.inventory.model.StoreProduct"/>
+        <mapping class="com.candlelabs.inventory.model.StoreProductId"/>
+        
     </session-factory>
 </hibernate-configuration>

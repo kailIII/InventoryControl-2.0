@@ -15,8 +15,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
     private String name;
     private ServerResponder server;
     
-    public CallbackClientImpl(
-            ServerResponder serverResponder, String name) throws RemoteException {
+    public CallbackClientImpl(ServerResponder serverResponder, String name) throws RemoteException {
         
         super();
         
@@ -24,7 +23,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
         
         this.server = serverResponder;
         
-        System.out.println("New Callback Client");
+        this.server.register(this);
     }
 
     public ServerResponder getServer() {
@@ -38,11 +37,11 @@ public class CallbackClientImpl extends UnicastRemoteObject
 
     @Override
     public String getName() throws RemoteException {
-        return null;
+        return this.name;
     }
 
     @Override
-    public void renameIfExist(String name) throws RemoteException {
+    public void setName(String name) throws RemoteException {
         this.name = name;
     }
     

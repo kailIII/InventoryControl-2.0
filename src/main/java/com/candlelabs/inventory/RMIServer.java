@@ -9,6 +9,7 @@ import java.rmi.registry.Registry;
 import com.candlelabs.inventory.rmi.implementations.service.ProductServiceImpl;
 import com.candlelabs.inventory.rmi.implementations.service.SupplierServiceImpl;
 import com.candlelabs.inventory.rmi.implementations.service.CategoryServiceImpl;
+import com.candlelabs.inventory.rmi.implementations.service.LoginServiceImpl;
 import com.candlelabs.inventory.rmi.implementations.service.MeasurementServiceImpl;
 
 /**
@@ -25,6 +26,8 @@ public class RMIServer {
         registry.rebind("supplierService", new SupplierServiceImpl());
         registry.rebind("categoryService", new CategoryServiceImpl());
         registry.rebind("measurementService", new MeasurementServiceImpl());
+        
+        registry.rebind("loginService", new LoginServiceImpl());
         
         registry.rebind("serverResponder", new CallbackServerImpl("serverResponder"));
         

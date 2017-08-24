@@ -3,11 +3,12 @@ package com.candlelabs.inventory.controller.product;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.util.List;
 
 import javafx.scene.control.TableView;
+
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXComboBox;
@@ -18,7 +19,7 @@ import com.candlelabs.inventory.model.Product;
 import com.candlelabs.inventory.model.Supplier;
 import com.candlelabs.inventory.util.FXUtil;
 import com.candlelabs.inventory.util.ValidatorUtil;
-import javafx.scene.control.Label;
+
 
 /**
  *
@@ -56,7 +57,7 @@ public class ProductContainer {
     private ValidatorUtil validator;
 
     protected ProductContainer() {
-        System.out.println("ProductContainer");
+        
     }
     
     protected void initTV(List<Product> productList) {

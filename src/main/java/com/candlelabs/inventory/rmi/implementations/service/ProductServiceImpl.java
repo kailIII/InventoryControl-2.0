@@ -1,8 +1,17 @@
 package com.candlelabs.inventory.rmi.implementations.service;
 
+import com.candlelabs.inventory.model.Category;
+import com.candlelabs.inventory.model.Measurement;
 import com.candlelabs.inventory.model.Product;
+import com.candlelabs.inventory.model.Supplier;
+
 import com.candlelabs.inventory.persistence.dao.ProductDao;
+import com.candlelabs.inventory.persistence.dao.CategoryDao;
+import com.candlelabs.inventory.persistence.dao.SupplierDao;
+import com.candlelabs.inventory.persistence.dao.MeasurementDao;
+
 import com.candlelabs.inventory.rmi.interfaces.service.ProductService;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -14,6 +23,9 @@ import java.util.List;
 public class ProductServiceImpl extends UnicastRemoteObject implements ProductService {
     
     private final ProductDao productDao = new ProductDao();
+    private final CategoryDao categoryDao = new CategoryDao();
+    private final SupplierDao supplierDao = new SupplierDao();
+    private final MeasurementDao measurementDao = new MeasurementDao();
     
     public ProductServiceImpl() throws RemoteException {
         super();
@@ -43,5 +55,20 @@ public class ProductServiceImpl extends UnicastRemoteObject implements ProductSe
     public List<Product> listProducts() throws RemoteException {
         return this.productDao.readAll();
    }
+
+    @Override
+    public List<Category> listCategories() throws RemoteException {
+        return this.categoryDao.readAll();
+    }
+
+    @Override
+    public List<Supplier> listSuppliers() throws RemoteException {
+        return this.supplierDao.readAll();
+    }
+
+    @Override
+    public List<Measurement> listMeasurements() throws RemoteException {
+        return this.measurementDao.readAll();
+    }
     
 }

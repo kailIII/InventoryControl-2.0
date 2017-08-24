@@ -1,41 +1,26 @@
 package com.candlelabs.inventory;
 
-import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
-import com.candlelabs.inventory.rmi.interfaces.service.ProductService;
-import com.candlelabs.inventory.rmi.interfaces.service.SupplierService;
-import com.candlelabs.inventory.rmi.interfaces.service.CategoryService;
-import com.candlelabs.inventory.rmi.interfaces.service.MeasurementService;
-import com.candlelabs.inventory.rmi.interfaces.service.ServerResponder;
-
 import static javafx.application.Application.launch;
 
 public class RMIClient extends Application {
     
-    public static ProductService productService;
-    public static SupplierService supplierService;
-    public static CategoryService categoryService;
-    public static MeasurementService measurementService;
-    public static ServerResponder serverResponder;
-    
-    static { 
-        connectServer(); 
-    }
+    public static String SERVER_ADDRESS = "127.0.0.1";
     
     @Override
     public void start(Stage stage) throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/product/Product.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/login/Login.fxml"));
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
@@ -45,37 +30,30 @@ public class RMIClient extends Application {
         stage.show();
     }
     
-    private static void connectServer() {
+    public static Registry getRegistry() {
+        
+        Registry registry = null;
         
         try {
             
-            Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+            registry = LocateRegistry.getRegistry(
+                    RMIClient.SERVER_ADDRESS, Registry.REGISTRY_PORT
+            );
             
-            RMIClient.productService = (ProductService) registry.lookup("productService");
-            RMIClient.supplierService = (SupplierService) registry.lookup("supplierService");
-            RMIClient.categoryService = (CategoryService) registry.lookup("categoryService");
-            RMIClient.measurementService = (MeasurementService) registry.lookup("measurementService");
+            System.out.println("Registry Ready");
             
-            RMIClient.serverResponder = (ServerResponder) registry.lookup("serverResponder");
-           
-            CallbackClientImpl callbackClientImpl = new CallbackClientImpl(serverResponder, "UserName");
-            
-            callbackClientImpl.getServer().sendMessage(callbackClientImpl, "holi");
-            
-            System.out.println("Connected to server");
-            
-        } catch (RemoteException | NotBoundException ex) {
+        } catch (RemoteException ex) {
             
             System.out.println("Exception: " + ex.toString());
             
-            System.out.println("No server running!");
-            
-            System.exit(0);
+            System.out.println("Unable to connect to server");
             
         }
         
+        return registry;
+        
     }
-
+    
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
      * main() serves only as fallback in case the application can not be

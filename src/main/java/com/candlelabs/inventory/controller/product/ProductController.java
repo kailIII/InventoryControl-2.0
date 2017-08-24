@@ -6,26 +6,27 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
-import static com.candlelabs.inventory.RMIClient.productService;
-import static com.candlelabs.inventory.RMIClient.categoryService;
-import static com.candlelabs.inventory.RMIClient.supplierService;
-import static com.candlelabs.inventory.RMIClient.measurementService;
-
 import com.candlelabs.inventory.controller.category.CategoryController;
 import com.candlelabs.inventory.controller.supplier.SupplierController;
 import com.candlelabs.inventory.controller.measurement.MeasurementController;
 
 import com.candlelabs.inventory.controller.interfaces.ProductInitializer;
+import com.candlelabs.inventory.rmi.interfaces.service.ProductService;
+
 import com.candlelabs.inventory.model.Product;
-
 import com.candlelabs.inventory.util.FXUtil;
-import javafx.fxml.FXML;
 
+import java.rmi.NotBoundException;
+
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+
+import com.candlelabs.inventory.RMIClient;
 
 /**
  *
@@ -33,8 +34,26 @@ import javafx.scene.layout.AnchorPane;
  */
 public class ProductController extends ProductContainer implements Initializable {
     
+    public ProductService productService;
+    
+    private void initServices() {
+        
+        try {
+            
+            this.productService = (ProductService) RMIClient.getRegistry().lookup("productService");
+            
+        } catch (RemoteException | NotBoundException ex) {
+            
+            System.out.println("Exception: " + ex.toString());
+            
+        }
+        
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        this.initServices();
         
         try {
             
@@ -43,9 +62,9 @@ public class ProductController extends ProductContainer implements Initializable
             super.initTV(productService.listProducts());
             
             super.initCBs(
-                    categoryService.listCategories(), 
-                    supplierService.listSuppliers(), 
-                    measurementService.listMeasurements()
+                    this.productService.listCategories(), 
+                    this.productService.listSuppliers(), 
+                    this.productService.listMeasurements()
             );
             
             this.initViews();

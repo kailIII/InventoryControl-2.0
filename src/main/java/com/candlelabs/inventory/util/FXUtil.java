@@ -2,12 +2,20 @@ package com.candlelabs.inventory.util;
 
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Node;
+import javafx.scene.Scene;
+
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -74,6 +82,18 @@ public class FXUtil {
     
     public static FXMLLoader loader(String fxml, Class clazz) throws IOException {
         return new FXMLLoader(clazz.getResource(fxml));
+    }
+    
+    public static <T> Stage stageFXML(String fxml, String title, Class<T> clazz) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(clazz.getResource(fxml));
+        
+        Stage stage = new Stage(StageStyle.DECORATED);
+        stage.setScene(new Scene((Pane) loader.load()));
+        
+        stage.setTitle(title);
+        
+        return stage;
     }
     
     public static void setAnchor(AnchorPane anchorPane) {
