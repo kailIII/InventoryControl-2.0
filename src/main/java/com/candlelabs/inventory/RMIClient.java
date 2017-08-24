@@ -1,5 +1,6 @@
 package com.candlelabs.inventory;
 
+import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +16,7 @@ import com.candlelabs.inventory.rmi.interfaces.service.ProductService;
 import com.candlelabs.inventory.rmi.interfaces.service.SupplierService;
 import com.candlelabs.inventory.rmi.interfaces.service.CategoryService;
 import com.candlelabs.inventory.rmi.interfaces.service.MeasurementService;
+import com.candlelabs.inventory.rmi.interfaces.service.ServerResponder;
 
 import static javafx.application.Application.launch;
 
@@ -24,7 +26,8 @@ public class RMIClient extends Application {
     public static SupplierService supplierService;
     public static CategoryService categoryService;
     public static MeasurementService measurementService;
-
+    public static ServerResponder serverResponder;
+    
     static { 
         connectServer(); 
     }
@@ -52,6 +55,12 @@ public class RMIClient extends Application {
             RMIClient.supplierService = (SupplierService) registry.lookup("supplierService");
             RMIClient.categoryService = (CategoryService) registry.lookup("categoryService");
             RMIClient.measurementService = (MeasurementService) registry.lookup("measurementService");
+            
+            RMIClient.serverResponder = (ServerResponder) registry.lookup("serverResponder");
+           
+            CallbackClientImpl callbackClientImpl = new CallbackClientImpl(serverResponder, "UserName");
+            
+            callbackClientImpl.getServer().sendMessage(callbackClientImpl, "holi");
             
             System.out.println("Connected to server");
             

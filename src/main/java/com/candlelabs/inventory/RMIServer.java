@@ -1,5 +1,6 @@
 package com.candlelabs.inventory;
 
+import com.candlelabs.inventory.rmi.implementations.service.CallbackServerImpl;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -18,15 +19,16 @@ public class RMIServer {
 
     public RMIServer() throws RemoteException {
         
-        Registry registry = LocateRegistry.createRegistry(1099);
+        Registry registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT);
         
         registry.rebind("productService", new ProductServiceImpl());
         registry.rebind("supplierService", new SupplierServiceImpl());
         registry.rebind("categoryService", new CategoryServiceImpl());
         registry.rebind("measurementService", new MeasurementServiceImpl());
         
-        System.out.println("Server started");
+        registry.rebind("serverResponder", new CallbackServerImpl("serverResponder"));
         
+        System.out.println("Server started");
     }
     
     public static void main(String[] args) throws RemoteException {
