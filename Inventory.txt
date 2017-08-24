@@ -1,0 +1,118 @@
+
+Mastermind
+
+	CRUD - Products
+	CRUD - Categories
+	CRUD - Suppliers
+	CRUD - Measurements
+
+	[Tiempo real] -> {
+		Notificar a los clientes (Store -> User) -> (CallbackClient)
+		Notificar al server (Mastermind) -> (CallbackServer)
+	}
+
+	[To Client] -> {
+		Server (this) -> Notificar -> Client (store/user), hacer cambios (vista/ObsList)
+	}
+
+	[To Server] -> {
+		Server (this) <- Notificar <- Client (store/user)
+	}
+
+	Autenticación
+
+		   //CallbackMastermind
+		 - Register CallbackClient("Mastermind")
+
+			From Client:
+			
+			 - Create:
+				 - newProduct();
+				 - nuevaCategory();
+				 - newSupplier();
+				 - newMeasurement();
+				 - newTransfer();
+				 - newAdjust();
+
+			 - Edit:
+				 - editProduct();
+				 - editCategory();
+				 - editSupplier();
+				 - editMeasurement();
+				 - editTransfer();
+				 - editAdjust();
+
+			- Delete:
+				 - deleteProduct();
+				 - deleteCategory();
+				 - deleteSupplier();
+				 - deleteMeasurement();
+				 - deleteTransfer();
+				 - deleteAdjust();
+
+
+			To Client: 
+				 - Category, Supplier, Measurement
+					 - Broadcast
+
+				 - Dependent of Store
+					 - If Store is Connected
+						 - Notificar -> {
+							 - newTransfer();
+							 - new Adjust();
+						   }
+				 - 
+				 - 				
+
+	TRANSFERENCIAS:
+
+	Crear transferencias [Tiempo real]
+		 - TransferService (createTransfer, Notificar)
+		 - [To Client]
+	
+	Filtrar transferencias - p. ej. TextField
+		 - Implementar un buscador según:
+			 - Fecha
+			 - Tienda (from, to)
+
+	Visualizar transferencias - p. ej. TableView
+
+		 - Transferencias creadas anteriormente
+			 - TransferService (listTransfers)
+
+		 - Transferencias en vivo [Tiempo real]
+			 - [To Server]
+
+	Modificar transferencias [Tiempo real]
+		 - TransferService (editTransfer, Notificar)
+		 - Existentes y en vivo
+		 - [To Client]
+
+	Eliminar transferencias [Tiempo real]
+		 - TransferService deleteTransfer, Notificar)
+		 - Existentes y en vivo
+		 - [To Client]
+
+	
+	AJUSTES:
+
+	Visualizar el inventario de todas las tiendas
+		 - StoreProductService
+
+	Realizar ajustes de inventario por tienda
+		 - [To Client]
+
+Store
+
+	Visualizar inventario
+
+
+StoreHouse
+
+
+
+
+
+
+
+
