@@ -16,8 +16,12 @@ import com.candlelabs.inventory.controller.store.selection.StoreSelectionControl
 
 import com.candlelabs.inventory.model.Category;
 import com.candlelabs.inventory.model.Store;
+import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
 
 import com.candlelabs.inventory.util.FXUtil;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,15 +34,23 @@ public class MastermindController extends MastermindContainer
     
     private StoreSelectionController storeSelectionController; 
     
+    private CallbackClientImpl client;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         this.initViews();
     }
     
     @Override
-    public void init(StoreSelectionController controller) {
+    public void init(
+            StoreSelectionController controller,
+            CallbackClientImpl client) {
+        
         this.storeSelectionController = controller;
+        
+        this.client = client;
+        
+        this.client.init(this);
         
         Store store = this.storeSelectionController.getStore();
         
@@ -46,6 +58,20 @@ public class MastermindController extends MastermindContainer
                 "Store: " + store.getName() + " - " + store.getTypeStore().getDescription()
         );
         
+    }
+
+    @Override
+    public boolean unregister() {
+        
+        try {
+            
+            return this.client.unregister();
+            
+        } catch (RemoteException ex) {
+            
+        }
+        
+        return false;
     }
     
     private void initViews() {
@@ -80,6 +106,22 @@ public class MastermindController extends MastermindContainer
         
         return controller;
         
+    }
+
+    public ProductController getProductController() {
+        return productController;
+    }
+
+    public StoreSelectionController getStoreSelectionController() {
+        return storeSelectionController;
+    }
+
+    public CallbackClientImpl getClient() {
+        return client;
+    }
+    
+    public void test() {
+        System.out.println("test");
     }
 
     @Override

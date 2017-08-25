@@ -20,7 +20,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="840.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.candlelabs.inventory.controller.category.CategoryController">
     <children>
-        <SplitPane dividerPositions="0.21657754010695188" layoutX="53.0" layoutY="100.0" prefHeight="469.0" prefWidth="583.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+        <SplitPane dividerPositions="0.21657754010695188" layoutX="53.0" layoutY="100.0" prefHeight="469.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
                     <children>

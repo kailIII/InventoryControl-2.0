@@ -13,7 +13,7 @@ public interface ServerResponder extends Remote {
     
     public boolean register(MessageResponder receiver) throws RemoteException;
     
-    public void unregister(MessageResponder receiver) throws RemoteException;
+    public boolean unregister(MessageResponder receiver) throws RemoteException;
     
     public void sendMessage(MessageResponder sender, String message)
             throws RemoteException;

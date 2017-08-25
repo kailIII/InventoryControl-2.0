@@ -1,5 +1,7 @@
 package com.candlelabs.inventory.rmi.implementations.service;
 
+import com.candlelabs.inventory.controller.interfaces.MastermindInitializer;
+import com.candlelabs.inventory.controller.mastermind.MastermindController;
 import com.candlelabs.inventory.rmi.interfaces.service.MessageResponder;
 import com.candlelabs.inventory.rmi.interfaces.service.ServerResponder;
 import java.rmi.RemoteException;
@@ -10,10 +12,12 @@ import java.rmi.server.UnicastRemoteObject;
  * @author VakSF
  */
 public class CallbackClientImpl extends UnicastRemoteObject
-     implements MessageResponder {
+     implements MessageResponder, MastermindInitializer {
     
     private String name;
     private ServerResponder server;
+    
+    private MastermindController mastermindController;
     
     public CallbackClientImpl(ServerResponder serverResponder, String name) throws RemoteException {
         
@@ -24,8 +28,17 @@ public class CallbackClientImpl extends UnicastRemoteObject
         this.server = serverResponder;
     }
     
+    @Override
+    public void init(MastermindController controller) {
+        this.mastermindController = controller;
+    }
+    
     public boolean register() throws RemoteException {
         return this.server.register(this);
+    }
+    
+    public boolean unregister() throws RemoteException {
+        return this.server.unregister(this);
     }
 
     public ServerResponder getServer() {

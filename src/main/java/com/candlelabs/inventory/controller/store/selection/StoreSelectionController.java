@@ -2,7 +2,6 @@ package com.candlelabs.inventory.controller.store.selection;
 
 import com.candlelabs.inventory.RMIClient;
 import com.candlelabs.inventory.controller.interfaces.LoginInitializer;
-import com.candlelabs.inventory.controller.interfaces.StoreSelectionInitializer;
 import com.candlelabs.inventory.controller.login.LoginController;
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
 import com.candlelabs.inventory.model.Store;
@@ -28,6 +27,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -58,7 +58,8 @@ public class StoreSelectionController extends StoreSelectionContainer
     }
     
     @FXML
-    private void next(ActionEvent event) throws RemoteException, NotBoundException {
+    private void next(ActionEvent event) 
+            throws RemoteException, NotBoundException, IOException {
         
         Store selectedStore = FXUtil.selectedTableItem(getStoresTV());
         
@@ -79,11 +80,27 @@ public class StoreSelectionController extends StoreSelectionContainer
             
             if (type.equals("cerebro")) {
                 
-                this.mastermindController = this.initView(
-                        "/view/mastermind/Mastermind.fxml",
-                        MastermindController.class,
-                        "Cerebro - Control de inventario"
-                );
+                String fxml = "/view/mastermind/Mastermind.fxml";
+                String title = "Cerebro - Control de inventario";
+                
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+                
+                Stage stage = new Stage(StageStyle.DECORATED);
+                stage.setScene(new Scene((Pane) loader.load()));
+                
+                this.mastermindController = loader.<MastermindController>getController();
+                this.mastermindController.init(this, client);
+                
+                stage.setOnCloseRequest((windowEvent) -> {
+                    
+                    this.mastermindController.unregister();
+                    
+                    System.exit(0);
+                    
+                });
+                
+                stage.setTitle(title);
+                stage.show();
                 
                 this.close(event);
                 
@@ -108,33 +125,6 @@ public class StoreSelectionController extends StoreSelectionContainer
         
     }
     
-    private <T extends StoreSelectionInitializer> T initView(
-            String fxml, Class<T> clazz, String title) {
-        
-        T controller = null;
-        
-        try {
-            
-            FXMLLoader loader = new FXMLLoader(clazz.getResource(fxml));
-        
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setScene(new Scene((Pane) loader.load()));
-            
-            controller = loader.<T>getController();
-            
-            controller.init(this);
-            
-            stage.setTitle(title);
-            stage.show();
-            
-        } catch (IOException ex) {
-            System.out.println("Exception: " + ex.toString());
-        }
-        
-        return controller;
-        
-    }
-
     public Store getStore() {
         return store;
     }

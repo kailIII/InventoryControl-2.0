@@ -49,25 +49,6 @@ public class ProductController extends ProductContainer
     
     public ProductService productService;
     
-    private void initServices() {
-        
-        try {
-            
-            this.productService = (ProductService) RMIClient.getRegistry().lookup("productService");
-            
-        } catch (RemoteException | NotBoundException ex) {
-            
-            System.out.println("Exception: " + ex.toString());
-            
-        }
-        
-    }
-    
-    @Override
-    public void init(MastermindController controller) {
-        this.mastermindController = controller;
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -93,6 +74,11 @@ public class ProductController extends ProductContainer
             
         }
         
+    }
+    
+    @Override
+    public void init(MastermindController controller) {
+        this.mastermindController = controller;
     }
     
     @FXML
@@ -160,6 +146,20 @@ public class ProductController extends ProductContainer
     @Override
     public void newCategory(Category category) {
         this.mastermindController.newCategory(category);
+    }
+    
+    private void initServices() {
+        
+        try {
+            
+            this.productService = (ProductService) RMIClient.getRegistry().lookup("productService");
+            
+        } catch (RemoteException | NotBoundException ex) {
+            
+            System.out.println("Exception: " + ex.toString());
+            
+        }
+        
     }
     
 }

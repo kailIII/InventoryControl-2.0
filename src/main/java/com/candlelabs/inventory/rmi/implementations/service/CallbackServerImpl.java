@@ -48,8 +48,10 @@ public class CallbackServerImpl extends UnicastRemoteObject
                     )
             );
             
-            receiver.sendMessageToClient("Connected to " + this.serverName);
-            receiver.sendMessageToClient("You're " + receiver.getName());
+            this.sendMessage(receiver, "broadcast");
+            
+            //receiver.sendMessageToClient("Connected to " + this.serverName);
+            //receiver.sendMessageToClient("You're " + receiver.getName());
             
             return true;
         }
@@ -58,14 +60,18 @@ public class CallbackServerImpl extends UnicastRemoteObject
     }
     
     @Override
-    public void unregister(MessageResponder receiver) throws RemoteException {
+    public boolean unregister(MessageResponder receiver) throws RemoteException {
         
         if (nameReceiver.containsKey(receiver.getName())) {
             
             sendMessage(receiver, "Disconnected");
             
             nameReceiver.remove(receiver.getName());
+            
+            return true;
         }
+        
+        return false;
         
     }
     
