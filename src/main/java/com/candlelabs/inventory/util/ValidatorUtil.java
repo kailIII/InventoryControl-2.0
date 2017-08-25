@@ -75,7 +75,7 @@ public class ValidatorUtil {
             
             String className = node.getClass().getSimpleName();
             
-            if (className.equals("TextField")) {
+            if (className.equals("TextField") || className.equals("JFXTextField")) {
                 
                 TextField textField = (TextField) node;
                 

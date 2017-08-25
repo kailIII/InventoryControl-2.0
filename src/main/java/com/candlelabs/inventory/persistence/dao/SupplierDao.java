@@ -7,6 +7,6 @@ import com.candlelabs.inventory.persistence.GenericDaoHibernateImpl;
  *
  * @author VakSF
  */
-public class SupplierDao extends GenericDaoHibernateImpl<Supplier, Long> {
+public class SupplierDao extends GenericDaoHibernateImpl<Supplier, Integer> {
     
 }

@@ -7,6 +7,6 @@ import com.candlelabs.inventory.persistence.GenericDaoHibernateImpl;
  *
  * @author VakSF
  */
-public class MeasurementDao extends GenericDaoHibernateImpl<Measurement, Long> {
+public class MeasurementDao extends GenericDaoHibernateImpl<Measurement, Integer> {
     
 }

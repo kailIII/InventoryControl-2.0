@@ -21,12 +21,12 @@ public class MeasurementServiceImpl extends UnicastRemoteObject implements Measu
     }
 
     @Override
-    public Long createMeasurement(Measurement measurement) throws RemoteException {
+    public Integer createMeasurement(Measurement measurement) throws RemoteException {
         return this.measurement.create(measurement);
     }
 
     @Override
-    public Measurement readMeasurement(Long measurementId) throws RemoteException {
+    public Measurement readMeasurement(Integer measurementId) throws RemoteException {
         return this.measurement.read(measurementId);
     }
 

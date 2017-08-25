@@ -27,12 +27,22 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 import com.candlelabs.inventory.RMIClient;
+import com.candlelabs.inventory.controller.interfaces.MastermindInitializer;
+import com.candlelabs.inventory.controller.mastermind.MastermindController;
 
 /**
  *
  * @author Arturo Cordero
  */
-public class ProductController extends ProductContainer implements Initializable {
+public class ProductController extends ProductContainer implements Initializable, MastermindInitializer {
+    
+    // Belongs To    
+    private MastermindController mastermindController;
+    
+    // Has 
+    private CategoryController categoryController;
+    private SupplierController supplierController;
+    private MeasurementController measurementController;
     
     public ProductService productService;
     
@@ -48,6 +58,11 @@ public class ProductController extends ProductContainer implements Initializable
             
         }
         
+    }
+    
+    @Override
+    public void init(MastermindController controller) {
+        this.mastermindController = controller;
     }
     
     @Override
@@ -84,6 +99,8 @@ public class ProductController extends ProductContainer implements Initializable
             
             Product product = getProduct();
             
+            this.mastermindController.newProduct(product);
+            
             new Alert(
                     AlertType.INFORMATION,
                     product.toString()
@@ -95,41 +112,47 @@ public class ProductController extends ProductContainer implements Initializable
             
         }
         
-    }
-    
+    }        
+            
     private void initViews() {
         
-        this.initView(
+        this.categoryController = this.initView(
                 "/view/category/Category.fxml",
                 CategoryController.class, this.getCategoryPane());
         
-        this.initView(
+        this.supplierController = this.initView(
                 "/view/supplier/Supplier.fxml", 
                 SupplierController.class, this.getSupplierPane());
         
-        this.initView(
+        this.measurementController = this.initView(
                 "/view/measurement/Measurement.fxml", 
                 MeasurementController.class, this.getMeasurementPane());
         
     }
     
-    private <T extends ProductInitializer> void initView(
+    private <T extends ProductInitializer> T initView(
             String fxml, Class<T> clazz, AnchorPane pane) {
+        
+        T controller = null;
         
         try {
             
             FXMLLoader loader = FXUtil.loader(fxml, getClass());
             
             AnchorPane anchorPane = loader.<AnchorPane>load();
-            loader.<T>getController().init(this);
+            controller = loader.<T>getController();
+            
+            controller.init(this);
             
             FXUtil.setAnchor(anchorPane);
             
             pane.getChildren().setAll(anchorPane);
             
         } catch (IOException ex) {
-            
+            System.out.println("Exception: " + ex.toString());
         }
+        
+        return controller;
         
     }
     

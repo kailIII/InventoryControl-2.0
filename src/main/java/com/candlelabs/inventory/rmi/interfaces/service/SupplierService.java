@@ -12,8 +12,8 @@ import com.candlelabs.inventory.model.Supplier;
  */
 public interface SupplierService extends Remote {
     
-    public Supplier readSupplier(Long supplierId) throws RemoteException;
-    public Long createSupplier(Supplier supplier) throws RemoteException;
+    public Supplier readSupplier(Integer supplierId) throws RemoteException;
+    public Integer createSupplier(Supplier supplier) throws RemoteException;
     public boolean updateSupplier(Supplier supplier) throws RemoteException;
     public boolean deleteSupplier(Supplier supplier) throws RemoteException;
     public List<Supplier> listSuppliers() throws RemoteException;

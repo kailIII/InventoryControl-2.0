@@ -3,8 +3,6 @@ package com.candlelabs.inventory;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +18,11 @@ public class RMIClient extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("/view/login/Login.fxml"));
+        //String url = "/view/login/Login.fxml";
+        //String url = "/view/mastermind/Mastermind.fxml";
+        String url = "/view/category/Category.fxml";
+        
+        Parent root = FXMLLoader.load(getClass().getResource(url));
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");

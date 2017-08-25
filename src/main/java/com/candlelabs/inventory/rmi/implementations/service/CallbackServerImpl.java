@@ -121,7 +121,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
     @Override
     public Collection<MessageResponder> getUser() throws RemoteException {
         
-        Collection<MessageResponder> resp = new HashSet<MessageResponder>();
+        Collection<MessageResponder> resp = new HashSet<>();
         
         for (PermissionMessageResponder perm : nameReceiver.values()) {
             resp.add(perm.getMessageResponder());

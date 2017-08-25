@@ -15,8 +15,8 @@ import com.candlelabs.inventory.model.Supplier;
  */
 public interface ProductService extends Remote {
     
-    public Product readProduct(Long productId) throws RemoteException;
-    public Long createProduct(Product product) throws RemoteException;
+    public Product readProduct(Integer productId) throws RemoteException;
+    public Integer createProduct(Product product) throws RemoteException;
     public boolean updateProduct(Product product) throws RemoteException;
     public boolean deleteProduct(Product product) throws RemoteException;
     public List<Product> listProducts() throws RemoteException;

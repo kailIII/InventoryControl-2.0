@@ -4,19 +4,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
-@Table(name="category")
-public class Category  implements Serializable {
+@Table( name="category", 
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames="name") 
+        } 
+)
+public class Category implements Serializable {
     
     private Integer id;
     private String name;
@@ -60,7 +67,8 @@ public class Category  implements Serializable {
         this.name = name;
     }
     
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="category")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     public List<Product> getProducts() {
         return this.products;
     }
@@ -88,10 +96,8 @@ public class Category  implements Serializable {
             return false;
         }
         final Category other = (Category) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        
+        return Objects.equals(this.id, other.id);
     }
     
     @Override

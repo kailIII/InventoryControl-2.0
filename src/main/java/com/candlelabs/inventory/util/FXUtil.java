@@ -9,10 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -105,6 +106,14 @@ public class FXUtil {
     
     public static <T> T selectedTableItem(TableView<T> tableView) {
         return tableView.getSelectionModel().getSelectedItem();
+    }
+    
+    public static <T> int selectedTableIndex(TableView<T> tableView) {
+        return tableView.getSelectionModel().getSelectedIndex();
+    }
+    
+    public static <T> T selectedListItem(ListView<T> listView) {
+        return listView.getSelectionModel().getSelectedItem();
     }
     
 }

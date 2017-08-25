@@ -12,8 +12,8 @@ import com.candlelabs.inventory.model.Category;
  */
 public interface CategoryService extends Remote {
     
-    public Category readCategory(Long categoryId) throws RemoteException;
-    public Long createCategory(Category category) throws RemoteException;
+    public Category readCategory(Integer categoryId) throws RemoteException;
+    public Integer createCategory(Category category) throws RemoteException;
     public boolean updateCategory(Category category) throws RemoteException;
     public boolean deleteCategory(Category category) throws RemoteException;
     public List<Category> listCategories() throws RemoteException;

@@ -6,11 +6,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -18,107 +18,167 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="688.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.candlelabs.inventory.controller.category.CategoryController">
-   <children>
-      <SplitPane dividerPositions="0.29797979797979796" layoutX="53.0" layoutY="100.0" prefHeight="469.0" prefWidth="583.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
-         <items>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
-               <children>
-                  <ListView layoutX="-94.0" layoutY="61.0" prefHeight="535.0" prefWidth="169.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="61.0" />
-                  <Label alignment="CENTER" layoutX="-94.0" layoutY="19.0" prefHeight="54.0" prefWidth="361.0" text="Categorías" textFill="#237bc252" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <font>
-                        <Font name="System Bold" size="26.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
-               <children>
-                  <TableView layoutX="-106.0" layoutY="-95.0" prefHeight="346.0" prefWidth="322.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="200.0">
-                     <columns>
-                        <TableColumn prefWidth="75.0" text="Nombre" />
-                        <TableColumn prefWidth="75.0" text="Precio" />
-                        <TableColumn prefWidth="136.0" text="Unidades por defecto" />
-                        <TableColumn prefWidth="115.0" text="Nivel de reorden" />
-                     </columns>
-                  </TableView>
-                  <ToolBar layoutX="60.0" layoutY="13.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <items>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Nuevo">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="LOUPE" size="20.0">
-                                 <fill>
-                                    <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
-                                       <stops>
-                                          <Stop color="BLACK" />
-                                          <Stop color="WHITE" offset="1.0" />
-                                       </stops>
-                                    </LinearGradient>
-                                 </fill>
-                              </MaterialDesignIconView>
-                           </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="90.0" text="Editar">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="APPLE" size="20.0">
-                                 <fill>
-                                    <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
-                                       <stops>
-                                          <Stop color="BLACK" />
-                                          <Stop color="WHITE" offset="1.0" />
-                                       </stops>
-                                    </LinearGradient>
-                                 </fill>
-                              </MaterialDesignIconView>
-                           </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Eliminar">
-                           <graphic>
-                              <MaterialDesignIconView glyphName="DELETE" size="20.0">
-                                 <fill>
-                                    <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
-                                       <stops>
-                                          <Stop color="BLACK" />
-                                          <Stop color="WHITE" offset="1.0" />
-                                       </stops>
-                                    </LinearGradient>
-                                 </fill>
-                              </MaterialDesignIconView>
-                           </graphic>
-                        </Button>
-                     </items>
-                  </ToolBar>
-                  <VBox alignment="CENTER" layoutX="21.0" layoutY="70.0" prefHeight="97.0" prefWidth="423.0" spacing="15.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
-                     <children>
-                        <Label alignment="CENTER" prefHeight="54.0" prefWidth="361.0" text="Datos de la Categoría" textFill="#00000052">
-                           <font>
-                              <Font name="System Bold" size="32.0" />
-                           </font>
+<AnchorPane id="AnchorPane" prefHeight="656.0" prefWidth="840.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.candlelabs.inventory.controller.category.CategoryController">
+    <children>
+        <SplitPane dividerPositions="0.21657754010695188" layoutX="53.0" layoutY="100.0" prefHeight="469.0" prefWidth="583.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+                    <children>
+                        <VBox alignment="CENTER_LEFT" layoutX="51.0" layoutY="185.0" prefHeight="54.0" prefWidth="148.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <Label prefHeight="30.0" prefWidth="125.0" text="Buscar:" textFill="#a1a1a1c3">
+                                    <font>
+                                        <Font name="System Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                                <JFXTextField fx:id="searchTF" focusColor="#4596d9" />
+                            </children>
+                        </VBox>
+                        <Label alignment="CENTER" layoutX="-94.0" layoutY="19.0" prefHeight="54.0" prefWidth="361.0" text="Categorías" textFill="#237bc252" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <font>
+                                <Font name="System Bold" size="26.0" />
+                            </font>
                         </Label>
-                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="423.0" spacing="10.0">
-                           <children>
-                              <MaterialDesignIconView glyphName="LABEL" size="22.0">
-                                 <fill>
-                                    <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
-                                       <stops>
-                                          <Stop color="#949494" />
+                        <TableView fx:id="categoriesTV" layoutY="160.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="125.0">
+                            <columns>
+                                <TableColumn prefWidth="46.0" text="ID">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="id" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="104.0" text="Nombre">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="name" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+                    <children>
+                        <TableView fx:id="productsTV" layoutX="-106.0" layoutY="-95.0" prefHeight="346.0" prefWidth="322.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="240.0">
+                            <columns>
+                                <TableColumn prefWidth="51.0" text="ID">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="id" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="137.33334350585938" text="Nombre">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="name" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="60.666656494140625" text="Precio">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="unitPrice" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="87.66668701171875" text="Unidades D.">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="unitsInStock" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="73.0" text="Nivel R.">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="reorderLevel" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="99.0" text="Proveedor">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="supplier" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                                <TableColumn prefWidth="87.0" text="Unidad M.">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="measurement" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                            </columns>
+                        </TableView>
+                        <ToolBar layoutX="60.0" layoutY="13.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <items>
+                                <Button mnemonicParsing="false" onAction="#newCategory" prefHeight="30.0" prefWidth="90.0" text="Nuevo">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="LOUPE" size="20.0">
+                                            <fill>
+                                                <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
+                                                    <stops>
+                                                        <Stop color="BLACK" />
+                                                        <Stop color="BLACK" offset="0.007662835249042145" />
                                           <Stop color="WHITE" offset="1.0" />
-                                       </stops>
-                                    </LinearGradient>
-                                 </fill>
-                              </MaterialDesignIconView>
-                              <JFXTextField prefHeight="25.0" prefWidth="305.0" promptText="Nombre de la categoría" />
-                           </children>
-                        </HBox>
-                        <JFXButton prefHeight="27.0" prefWidth="162.0" ripplerFill="#2f9bff" style="-fx-border-color: #2099f5; -fx-border-width: 0.8px;" text="Guardar" />
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </AnchorPane>
-         </items>
-      </SplitPane>
-   </children>
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                        </MaterialDesignIconView>
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#edit" prefHeight="28.0" prefWidth="90.0" text="Editar">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="PENCIL" size="20.0">
+                                            <fill>
+                                                <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
+                                                    <stops>
+                                                        <Stop color="BLACK" />
+                                                        <Stop color="WHITE" offset="1.0" />
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                        </MaterialDesignIconView>
+                                    </graphic>
+                                </Button>
+                                <Button mnemonicParsing="false" onAction="#deleteCategory" prefHeight="30.0" prefWidth="90.0" text="Eliminar">
+                                    <graphic>
+                                        <MaterialDesignIconView glyphName="DELETE" size="20.0">
+                                            <fill>
+                                                <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
+                                                    <stops>
+                                                        <Stop color="BLACK" />
+                                                        <Stop color="WHITE" offset="1.0" />
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                        </MaterialDesignIconView>
+                                    </graphic>
+                                </Button>
+                            </items>
+                        </ToolBar>
+                        <VBox alignment="CENTER" layoutX="21.0" layoutY="70.0" prefHeight="97.0" prefWidth="423.0" spacing="15.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                            <children>
+                                <Label alignment="CENTER" prefHeight="54.0" prefWidth="361.0" text="Datos de la Categoría" textFill="#00000052">
+                                    <font>
+                                        <Font name="System Bold" size="32.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="infoL" prefHeight="20.0" prefWidth="350.0" text="Visualizando categoría" textFill="#4596d9">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <HBox alignment="CENTER" prefHeight="38.0" prefWidth="423.0" spacing="10.0">
+                                    <children>
+                                        <MaterialDesignIconView glyphName="LABEL" size="22.0">
+                                            <fill>
+                                                <LinearGradient endX="1.0" endY="1.0" startX="0.5428571428571428" startY="0.5238095238095238">
+                                                    <stops>
+                                                        <Stop color="#949494" />
+                                                        <Stop color="WHITE" offset="1.0" />
+                                                    </stops>
+                                                </LinearGradient>
+                                            </fill>
+                                        </MaterialDesignIconView>
+                                        <JFXTextField fx:id="nameTF" editable="false" focusColor="#4596d9" onKeyPressed="#submit" prefHeight="25.0" prefWidth="305.0" promptText="Nombre de la categoría" />
+                                    </children>
+                                </HBox>
+                                <JFXButton fx:id="submitB" disable="true" onAction="#createEdit" prefHeight="27.0" prefWidth="217.0" ripplerFill="#3fb0ac" style="-fx-border-color: #4596d9; -fx-border-width: 0.8px;" text="Crear" />
+                            </children>
+                            <padding>
+                                <Insets bottom="20.0" />
+                            </padding>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
 </AnchorPane>

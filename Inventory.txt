@@ -19,14 +19,14 @@ Mastermind
 		Server (this) <- Notificar <- Client (store/user)
 	}
 
-	Autenticaci�n
+	Autenticacion
 
 		   //CallbackMastermind
 		 - Register CallbackClient("Mastermind")
 
 			From Client:
 			
-			 - Create:
+			 - Create: 
 				 - newProduct();
 				 - nuevaCategory();
 				 - newSupplier();
@@ -49,29 +49,32 @@ Mastermind
 				 - deleteMeasurement();
 				 - deleteTransfer();
 				 - deleteAdjust();
-
-
-			To Client: 
-				 - Category, Supplier, Measurement
-					 - Broadcast
+                                 
+			To Client: (A sí mismo) 
+				 - Category, Supplier, Measurement 
+					 - Broadcast 
 
 				 - Dependent of Store
 					 - If Store is Connected
 						 - Notificar -> {
 							 - newTransfer();
+                                                         - editTransfer();
+                                                         
 							 - new Adjust();
 						   }
 				 - 
 				 - 				
 
 	TRANSFERENCIAS:
-
+        
+        /*
 	Crear transferencias [Tiempo real]
 		 - TransferService (createTransfer, Notificar)
 		 - [To Client]
+        */
 	
 	Filtrar transferencias - p. ej. TextField
-		 - Implementar un buscador seg�n:
+		 - Implementar un buscador seg�n:
 			 - Fecha
 			 - Tienda (from, to)
 
@@ -82,7 +85,8 @@ Mastermind
 
 		 - Transferencias en vivo [Tiempo real]
 			 - [To Server]
-
+                         
+        /*
 	Modificar transferencias [Tiempo real]
 		 - TransferService (editTransfer, Notificar)
 		 - Existentes y en vivo
@@ -92,27 +96,62 @@ Mastermind
 		 - TransferService deleteTransfer, Notificar)
 		 - Existentes y en vivo
 		 - [To Client]
-
+        */
 	
-	AJUSTES:
+	INVENTARIO:
 
 	Visualizar el inventario de todas las tiendas
 		 - StoreProductService
 
+        AJUSTES:
+            Visualizar ajustes de inventario
+        
+        /*
 	Realizar ajustes de inventario por tienda
 		 - [To Client]
+        */
 
 Store
 
-	Visualizar inventario
+	Visualizar inventario de la tienda actual y otros tiendas
+        
+        Permitir salida de inventario 
+        
+        1. Solicitar productos [Transferencia] 
 
+        2. Preparar transferencias -> Enviar
+        
+        3. Aceptar transferencias -> Finalizar -> Ajuste
+            Si la cantidad recibida es la correcta
+                Aceptar
+            Si no 
+                No aceptada
+                Inconsistencia
 
+        
+        
+        
 StoreHouse
 
+        CRUD - Products
+        CRUD - Categories
+	CRUD - Suppliers
+	CRUD - Measurements
+        
+        Visualizar inventario de la bodega y todas las tiendas
+        
+        Crear transferencias:
+             - De bodega a tienda
+             - De bodega a bodega
+             
+        Realizar ajustes de inventario a sí misma
+        
+        Ver peticiones de transferencia
+             - Cuando la tienda lo solicita
 
-
-
-
-
-
-
+        Transferencias automáticas [Producto necesitado] -> Tienda [Aceptación]
+             - Crea transferencias según el estado del inventario de las tiendas
+        
+        
+        
+        

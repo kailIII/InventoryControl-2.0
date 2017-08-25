@@ -11,8 +11,8 @@ import java.util.List;
  */
 public interface MeasurementService extends Remote {
     
-    public Measurement readMeasurement(Long measurementId) throws RemoteException;
-    public Long createMeasurement(Measurement measurement) throws RemoteException;
+    public Measurement readMeasurement(Integer measurementId) throws RemoteException;
+    public Integer createMeasurement(Measurement measurement) throws RemoteException;
     public boolean updateMeasurement(Measurement measurement) throws RemoteException;
     public boolean deleteMeasurement(Measurement measurement) throws RemoteException;
     public List<Measurement> listMeasurements() throws RemoteException;

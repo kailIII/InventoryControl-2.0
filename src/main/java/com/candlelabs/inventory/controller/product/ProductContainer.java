@@ -17,9 +17,9 @@ import com.candlelabs.inventory.model.Category;
 import com.candlelabs.inventory.model.Measurement;
 import com.candlelabs.inventory.model.Product;
 import com.candlelabs.inventory.model.Supplier;
+
 import com.candlelabs.inventory.util.FXUtil;
 import com.candlelabs.inventory.util.ValidatorUtil;
-
 
 /**
  *
@@ -52,7 +52,7 @@ public class ProductContainer {
     @FXML
     private AnchorPane categoryPane, supplierPane, measurementPane;
     
-    private ObservableList<Product> productList;
+    private ObservableList<Product> products;
     
     private ValidatorUtil validator;
 
@@ -60,14 +60,14 @@ public class ProductContainer {
         
     }
     
-    protected void initTV(List<Product> productList) {
+    protected void initTV(List<Product> products) {
         
-        this.productList = FXCollections.observableArrayList();
+        this.products = FXCollections.observableArrayList();
         
-        this.productsTV.setItems(this.productList);
-        this.productList.addAll(productList);
+        this.productsTV.setItems(this.products);
+        this.products.addAll(products);
         
-        if (!this.productList.isEmpty()) {
+        if (!this.products.isEmpty()) {
             this.productsTV.getSelectionModel().selectFirst();
             this.updateFields(FXUtil.selectedTableItem(this.productsTV));
         }

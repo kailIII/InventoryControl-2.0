@@ -32,12 +32,12 @@ public class ProductServiceImpl extends UnicastRemoteObject implements ProductSe
     }
 
     @Override
-    public Long createProduct(Product product) throws RemoteException {
+    public Integer createProduct(Product product) throws RemoteException {
         return this.productDao.create(product);
     }
 
     @Override
-    public Product readProduct(Long productId) throws RemoteException {
+    public Product readProduct(Integer productId) throws RemoteException {
         return this.productDao.read(productId);
     }
 

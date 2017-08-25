@@ -7,6 +7,6 @@ import com.candlelabs.inventory.persistence.GenericDaoHibernateImpl;
  *
  * @author VakSF
  */
-public class CategoryDao extends GenericDaoHibernateImpl<Category, Long> {
+public class CategoryDao extends GenericDaoHibernateImpl<Category, Integer> {
     
 }

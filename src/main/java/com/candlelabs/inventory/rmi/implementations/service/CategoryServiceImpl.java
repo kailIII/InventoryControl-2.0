@@ -21,12 +21,12 @@ public class CategoryServiceImpl extends UnicastRemoteObject implements Category
     }
 
     @Override
-    public Long createCategory(Category category) throws RemoteException {
+    public Integer createCategory(Category category) throws RemoteException {
         return this.category.create(category);
     }
 
     @Override
-    public Category readCategory(Long categoryId) throws RemoteException {
+    public Category readCategory(Integer categoryId) throws RemoteException {
         return this.category.read(categoryId);
     }
 

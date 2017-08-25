@@ -21,12 +21,12 @@ public class SupplierServiceImpl extends UnicastRemoteObject implements Supplier
     }
 
     @Override
-    public Long createSupplier(Supplier supplier) throws RemoteException {
+    public Integer createSupplier(Supplier supplier) throws RemoteException {
         return this.supplier.create(supplier);
     }
 
     @Override
-    public Supplier readSupplier(Long supplierId) throws RemoteException {
+    public Supplier readSupplier(Integer supplierId) throws RemoteException {
         return this.supplier.read(supplierId);
     }
 
