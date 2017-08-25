@@ -6,8 +6,8 @@ import com.candlelabs.inventory.controller.interfaces.ProductInitializer;
 import com.candlelabs.inventory.controller.product.ProductController;
 
 import com.candlelabs.inventory.rmi.interfaces.service.CategoryService;
-
 import com.candlelabs.inventory.model.Category;
+
 import com.candlelabs.inventory.util.FXUtil;
 import java.io.IOException;
 
@@ -20,8 +20,6 @@ import javafx.fxml.Initializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -53,7 +51,7 @@ public class CategoryController extends CategoryContainer
             
             this.initProducts();
             
-            this.initCategories(categoryService.listCategories());
+            this.initCategories(this.categoryService.listCategories());
             
         } catch (RemoteException ex) {
             
@@ -141,6 +139,10 @@ public class CategoryController extends CategoryContainer
             if (categoryId != null) {
                 
                 category.setId(categoryId);
+                
+                if (this.productController != null) {
+                    this.productController.newCategory(category);
+                }
                 
                 setEditing(false);
                 

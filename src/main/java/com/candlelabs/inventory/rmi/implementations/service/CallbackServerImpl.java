@@ -32,26 +32,29 @@ public class CallbackServerImpl extends UnicastRemoteObject
         this.nameReceiver = new HashMap<>();
         
         this.serverName = serverName;
-        
     }
     
     @Override
-    public void register(MessageResponder receiver) throws RemoteException {
+    public boolean register(MessageResponder receiver) throws RemoteException {
         
-        int i = 0;
-        
-        while (this.nameReceiver.containsKey(receiver.getName())) {
-            receiver.setName(receiver.getName() + "_" + i);
-            i++;
+        if (!this.nameReceiver.containsKey(receiver.getName())) {
+
+            this.nameReceiver.put(
+                    
+                    receiver.getName(), 
+                    
+                    new PermissionMessageResponder(
+                            this, receiver
+                    )
+            );
+            
+            receiver.sendMessageToClient("Connected to " + this.serverName);
+            receiver.sendMessageToClient("You're " + receiver.getName());
+            
+            return true;
         }
         
-        System.out.println(receiver.getName());
-        
-        this.nameReceiver.put(receiver.getName(), new PermissionMessageResponder(this, receiver));
-        
-        receiver.sendMessageToClient("Connected - Welcome to CandleLabs - " + this.serverName);
-        receiver.sendMessageToClient("You're " + receiver.getName());
-        
+        return false;
     }
     
     @Override

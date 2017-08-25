@@ -107,6 +107,44 @@ public class ValidatorUtil {
         
     }
     
+    public void setEditable(boolean value) {
+        
+        for (Node node : nodes) {
+            
+            String className = node.getClass().getSimpleName();
+            
+            if (className.equals("TextField") || className.equals("JFXTextField")) {
+                
+                TextField textField = (TextField) node;
+                
+                textField.setEditable(value);
+                
+            } else {
+                
+                if (className.equals("PasswordField")) {
+                    
+                    PasswordField passwordField = (PasswordField) node;
+                    
+                    passwordField.setEditable(value);
+                    
+                } else {
+                    
+                    if (className.equals("ComboBox")) {
+                        
+                        ComboBox comboBox = (ComboBox) node;
+                        
+                        comboBox.setDisable(!value);
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    
     public Alert emptyFields() {
         
         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -22,8 +22,10 @@ public class CallbackClientImpl extends UnicastRemoteObject
         this.name = name;
         
         this.server = serverResponder;
-        
-        this.server.register(this);
+    }
+    
+    public boolean register() throws RemoteException {
+        return this.server.register(this);
     }
 
     public ServerResponder getServer() {

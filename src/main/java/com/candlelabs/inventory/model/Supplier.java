@@ -18,9 +18,8 @@ import javax.persistence.Table;
 public class Supplier implements Serializable {
     
     private Integer id;
-    private String companyName;
-    private String contactName;
-    private String contactTitle;
+    private String company;
+    private String contact;
     private String address;
     private String city;
     private String country;
@@ -31,10 +30,12 @@ public class Supplier implements Serializable {
         
     }
     
-    public Supplier(String companyName, String contactName, String contactTitle, String address, String city, String country, String phone) {
-        this.companyName = companyName;
-        this.contactName = contactName;
-        this.contactTitle = contactTitle;
+    public Supplier(
+            String company, String contact, String address, 
+            String city, String country, String phone) {
+        
+        this.company = company;
+        this.contact = contact;
         this.address = address;
         this.city = city;
         this.country = country;
@@ -52,31 +53,22 @@ public class Supplier implements Serializable {
         this.id = id;
     }
     
-    @Column(name="companyName")
-    public String getCompanyName() {
-        return this.companyName;
+    @Column(name="company")
+    public String getCompany() {
+        return this.company;
     }
     
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompany(String company) {
+        this.company = company;
     }
     
-    @Column(name="contactName")
-    public String getContactName() {
-        return this.contactName;
+    @Column(name="contact")
+    public String getContact() {
+        return this.contact;
     }
     
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-    
-    @Column(name="contactTitle")
-    public String getContactTitle() {
-        return this.contactTitle;
-    }
-    
-    public void setContactTitle(String contactTitle) {
-        this.contactTitle = contactTitle;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
     
     @Column(name="address")
@@ -153,7 +145,7 @@ public class Supplier implements Serializable {
 
     @Override
     public String toString() {
-        return this.companyName;
+        return this.company;
     }
 
 }

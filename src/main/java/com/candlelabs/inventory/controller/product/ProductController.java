@@ -28,13 +28,16 @@ import javafx.scene.layout.AnchorPane;
 
 import com.candlelabs.inventory.RMIClient;
 import com.candlelabs.inventory.controller.interfaces.MastermindInitializer;
+import com.candlelabs.inventory.controller.interfaces.ToServer;
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
+import com.candlelabs.inventory.model.Category;
 
 /**
  *
  * @author Arturo Cordero
  */
-public class ProductController extends ProductContainer implements Initializable, MastermindInitializer {
+public class ProductController extends ProductContainer 
+        implements Initializable, MastermindInitializer, ToServer {
     
     // Belongs To    
     private MastermindController mastermindController;
@@ -99,8 +102,6 @@ public class ProductController extends ProductContainer implements Initializable
             
             Product product = getProduct();
             
-            this.mastermindController.newProduct(product);
-            
             new Alert(
                     AlertType.INFORMATION,
                     product.toString()
@@ -154,6 +155,11 @@ public class ProductController extends ProductContainer implements Initializable
         
         return controller;
         
+    }
+
+    @Override
+    public void newCategory(Category category) {
+        this.mastermindController.newCategory(category);
     }
     
 }

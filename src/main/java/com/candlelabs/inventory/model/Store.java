@@ -17,6 +17,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -31,6 +34,8 @@ public class Store implements Serializable {
     private Integer id;
     private String name;
     private String location;
+    private TypeStore typeStore;
+    
     private List<StoreProduct> storeProducts = new ArrayList<>(0);
     
     public Store() {
@@ -81,6 +86,16 @@ public class Store implements Serializable {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+    
+    @ManyToOne
+    @JoinColumn(name = "type_store_id")
+    public TypeStore getTypeStore() {
+        return typeStore;
+    }
+
+    public void setTypeStore(TypeStore typeStore) {
+        this.typeStore = typeStore;
     }
     
     @LazyCollection(LazyCollectionOption.FALSE)

@@ -1,6 +1,9 @@
 package com.candlelabs.inventory.rmi.implementations.service;
 
+import com.candlelabs.inventory.model.User;
+
 import com.candlelabs.inventory.persistence.dao.UserDao;
+
 import com.candlelabs.inventory.rmi.interfaces.service.LoginService;
 
 import java.rmi.RemoteException;
@@ -22,7 +25,7 @@ public class LoginServiceImpl extends UnicastRemoteObject implements LoginServic
     }
     
     @Override
-    public boolean login(String user, String password) throws RemoteException {
+    public User login(String user, String password) throws RemoteException {
         
         Criteria loginCriteria = this.userDao.getSession().createCriteria(
                 this.userDao.clazz());
@@ -30,7 +33,7 @@ public class LoginServiceImpl extends UnicastRemoteObject implements LoginServic
         loginCriteria.add(Restrictions.eq("username", user));
         loginCriteria.add(Restrictions.eq("password", password));
         
-        return this.userDao.readUniqueByCriteria(loginCriteria) != null;
+        return this.userDao.readUniqueByCriteria(loginCriteria);
         
     }
     

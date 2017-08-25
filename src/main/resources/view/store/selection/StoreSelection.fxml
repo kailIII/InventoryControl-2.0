@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="346.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.candlelabs.inventory.controller.store.selection.StoreSelectionController">
+    <children>
+        <Label alignment="CENTER" layoutX="64.0" layoutY="35.0" text="Seleccione una tienda:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <TableView fx:id="storesTV" layoutX="64.0" layoutY="67.0" prefHeight="162.0" prefWidth="242.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
+            <columns>
+                <TableColumn prefWidth="54.0" text="ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="id" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="130.0" text="Nombre">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="205.0" text="Ubicación">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="location" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+        <Button layoutX="20.0" layoutY="299.0" mnemonicParsing="false" text="Manejador de tiendas" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" />
+        <Button defaultButton="true" layoutX="198.0" layoutY="274.0" mnemonicParsing="false" onAction="#next" prefHeight="25.0" prefWidth="173.0" text="Continuar" AnchorPane.bottomAnchor="47.0" AnchorPane.rightAnchor="20.0" />
+        <Button cancelButton="true" layoutX="20.0" layoutY="262.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Cancelar" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" />
+    </children>
+</AnchorPane>

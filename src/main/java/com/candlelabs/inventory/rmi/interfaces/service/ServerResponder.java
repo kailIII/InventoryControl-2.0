@@ -11,7 +11,7 @@ import java.util.Hashtable;
  */
 public interface ServerResponder extends Remote {
     
-    public void register(MessageResponder receiver) throws RemoteException;
+    public boolean register(MessageResponder receiver) throws RemoteException;
     
     public void unregister(MessageResponder receiver) throws RemoteException;
     

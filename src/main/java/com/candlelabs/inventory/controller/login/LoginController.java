@@ -12,12 +12,17 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import com.candlelabs.inventory.RMIClient;
+import com.candlelabs.inventory.controller.interfaces.LoginInitializer;
+import com.candlelabs.inventory.controller.store.selection.StoreSelectionController;
+import com.candlelabs.inventory.model.User;
 import com.candlelabs.inventory.rmi.interfaces.service.LoginService;
 
-import com.candlelabs.inventory.util.FXUtil;
-
 import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -25,7 +30,11 @@ import javafx.stage.Stage;
  */
 public class LoginController extends LoginContainer implements Initializable {
     
+    private StoreSelectionController storeSelectionController;
+    
     private LoginService loginService;
+    
+    private User loggedUser;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -47,21 +56,21 @@ public class LoginController extends LoginContainer implements Initializable {
         
         if (getValidator().validateFields()) {
             
-            String user = getUserTF().getText();
+            String username = getUserTF().getText();
             String password = getPasswordPF().getText();
             
-            boolean login = this.loginService.login(user, password);
+            User user = this.loginService.login(username, password);
             
-            if (login) {
+            if (user != null) {
                 
-                Stage stage = FXUtil.stageFXML(
-                        "/view/product/Product.fxml",
-                        "Productos - Control de inventario",
-                        this.getClass()
+                this.loggedUser = user;
+                
+                this.storeSelectionController = this.initView(
+                        "/view/store/selection/StoreSelection.fxml",
+                        StoreSelectionController.class,
+                        "Seleccionar ubicación - Control de inventario"
                 );
                 
-                stage.show();
-                    
                 this.close(event);
                 
             } else {
@@ -75,6 +84,37 @@ public class LoginController extends LoginContainer implements Initializable {
             getValidator().emptyFields().show();
             
         }
+        
+    }
+
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+    
+    private <T extends LoginInitializer> T initView(
+            String fxml, Class<T> clazz, String title) {
+        
+        T controller = null;
+        
+        try {
+            
+            FXMLLoader loader = new FXMLLoader(clazz.getResource(fxml));
+        
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setScene(new Scene((Pane) loader.load()));
+            
+            controller = loader.<T>getController();
+            
+            controller.init(this);
+            
+            stage.setTitle(title);
+            stage.show();
+            
+        } catch (IOException ex) {
+            System.out.println("Exception: " + ex.toString());
+        }
+        
+        return controller;
         
     }
     

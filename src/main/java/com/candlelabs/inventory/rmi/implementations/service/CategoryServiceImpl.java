@@ -14,7 +14,7 @@ import com.candlelabs.inventory.rmi.interfaces.service.CategoryService;
  */
 public class CategoryServiceImpl extends UnicastRemoteObject implements CategoryService {
     
-    private final CategoryDao category = new CategoryDao();
+    private final CategoryDao categoryDao = new CategoryDao();
     
     public CategoryServiceImpl() throws RemoteException {
         super();
@@ -22,27 +22,27 @@ public class CategoryServiceImpl extends UnicastRemoteObject implements Category
 
     @Override
     public Integer createCategory(Category category) throws RemoteException {
-        return this.category.create(category);
+        return this.categoryDao.create(category);
     }
 
     @Override
     public Category readCategory(Integer categoryId) throws RemoteException {
-        return this.category.read(categoryId);
+        return this.categoryDao.read(categoryId);
     }
 
     @Override
     public boolean updateCategory(Category category) throws RemoteException {
-        return this.category.update(category);
+        return this.categoryDao.update(category);
     }
 
     @Override
     public boolean deleteCategory(Category category) throws RemoteException {
-        return this.category.delete(category);
+        return this.categoryDao.delete(category);
     }
 
     @Override
     public List<Category> listCategories() throws RemoteException {
-        return this.category.readAll();
+        return this.categoryDao.readAll();
    }
     
 }

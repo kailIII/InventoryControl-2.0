@@ -11,6 +11,7 @@ import com.candlelabs.inventory.rmi.implementations.service.SupplierServiceImpl;
 import com.candlelabs.inventory.rmi.implementations.service.CategoryServiceImpl;
 import com.candlelabs.inventory.rmi.implementations.service.LoginServiceImpl;
 import com.candlelabs.inventory.rmi.implementations.service.MeasurementServiceImpl;
+import com.candlelabs.inventory.rmi.implementations.service.StoreServiceImpl;
 
 /**
  *
@@ -26,6 +27,7 @@ public class RMIServer {
         registry.rebind("supplierService", new SupplierServiceImpl());
         registry.rebind("categoryService", new CategoryServiceImpl());
         registry.rebind("measurementService", new MeasurementServiceImpl());
+        registry.rebind("StoreService", new StoreServiceImpl());
         
         registry.rebind("loginService", new LoginServiceImpl());
         
