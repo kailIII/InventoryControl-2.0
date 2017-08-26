@@ -28,16 +28,14 @@ import javafx.scene.layout.AnchorPane;
 
 import com.candlelabs.inventory.RMIClient;
 import com.candlelabs.inventory.controller.interfaces.MastermindInitializer;
-import com.candlelabs.inventory.controller.interfaces.ToServer;
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
-import com.candlelabs.inventory.model.Category;
 
 /**
  *
  * @author Arturo Cordero
  */
 public class ProductController extends ProductContainer 
-        implements Initializable, MastermindInitializer, ToServer {
+        implements Initializable, MastermindInitializer {
     
     // Belongs To    
     private MastermindController mastermindController;
@@ -69,9 +67,7 @@ public class ProductController extends ProductContainer
             this.initViews();
             
         } catch (RemoteException ex) {
-            
             System.out.println("Exception: " + ex.toString());
-            
         }
         
     }
@@ -143,11 +139,6 @@ public class ProductController extends ProductContainer
         
     }
 
-    @Override
-    public void newCategory(Category category) {
-        this.mastermindController.newCategory(category);
-    }
-    
     private void initServices() {
         
         try {
@@ -160,6 +151,26 @@ public class ProductController extends ProductContainer
             
         }
         
+    }
+
+    public MastermindController getMastermindController() {
+        return mastermindController;
+    }
+
+    public CategoryController getCategoryController() {
+        return categoryController;
+    }
+
+    public SupplierController getSupplierController() {
+        return supplierController;
+    }
+
+    public MeasurementController getMeasurementController() {
+        return measurementController;
+    }
+
+    public ProductService getProductService() {
+        return productService;
     }
     
 }

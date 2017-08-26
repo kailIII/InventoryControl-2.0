@@ -4,10 +4,12 @@ import com.candlelabs.inventory.RMIClient;
 import com.candlelabs.inventory.controller.interfaces.LoginInitializer;
 import com.candlelabs.inventory.controller.login.LoginController;
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
+import com.candlelabs.inventory.controller.store.StoreController;
 import com.candlelabs.inventory.model.Store;
 import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
 import com.candlelabs.inventory.rmi.interfaces.service.ServerResponder;
 import com.candlelabs.inventory.util.FXUtil;
+
 import java.io.IOException;
 
 import java.net.URL;
@@ -27,7 +29,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 /**
  *
@@ -39,6 +40,7 @@ public class StoreSelectionController extends StoreSelectionContainer
     private LoginController loginController;
     
     private MastermindController mastermindController;
+    private StoreController storeController;
     
     private Store store;
     
@@ -106,7 +108,24 @@ public class StoreSelectionController extends StoreSelectionContainer
                 
             } else if (type.equals("tienda")) {
                 
-                System.out.println("Vista pendiente");
+                String fxml = "/view/mastermind/Mastermind.fxml";
+                String title = "Tienda - Control de inventario";
+                
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+                
+                Stage stage = new Stage(StageStyle.DECORATED);
+                stage.setScene(new Scene((Pane) loader.load()));
+                
+                this.storeController = loader.<StoreController>getController();
+                this.storeController.init(this, client);
+                
+                stage.setOnCloseRequest((windowEvent) -> {
+                    
+                    this.storeController.unregister();
+                    
+                    System.exit(0);
+                    
+                });
                 
             } else if (type.equals("bodega")) {
                 

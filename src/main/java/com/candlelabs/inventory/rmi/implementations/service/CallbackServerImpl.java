@@ -1,5 +1,7 @@
 package com.candlelabs.inventory.rmi.implementations.service;
 
+import com.candlelabs.inventory.controller.mastermind.MastermindController;
+import com.candlelabs.inventory.model.Category;
 import java.rmi.server.UnicastRemoteObject;
 
 import java.rmi.RemoteException;
@@ -50,9 +52,6 @@ public class CallbackServerImpl extends UnicastRemoteObject
             
             this.sendMessage(receiver, "broadcast");
             
-            //receiver.sendMessageToClient("Connected to " + this.serverName);
-            //receiver.sendMessageToClient("You're " + receiver.getName());
-            
             return true;
         }
         
@@ -74,6 +73,30 @@ public class CallbackServerImpl extends UnicastRemoteObject
         return false;
         
     }
+
+    @Override
+    public void categoryAction(
+            MessageResponder sender, Category category, String action, int index) throws RemoteException {
+        
+        this.nameReceiver.values().forEach((PermissionMessageResponder receiver) -> {
+            
+            try {
+                
+                MessageResponder messageResponder = receiver.getMessageResponder();
+                
+                if (!messageResponder.getName().equals(sender.getName())) {
+                    
+                    messageResponder.categoryAction(category, action, index);
+                    
+                }
+                
+            } catch (RemoteException ex) {
+                System.out.println("Exception: " + ex.toString());
+            }
+            
+        });
+        
+    }
     
     @Override
     public void sendMessage(MessageResponder sender, String message) throws RemoteException {
@@ -85,7 +108,7 @@ public class CallbackServerImpl extends UnicastRemoteObject
                 receiver.getMessageResponder().sendMessageToClient(message);
                 
             } catch (RemoteException ex) {
-                
+                System.out.println("Exception: " + ex.toString());
             }
             
         });

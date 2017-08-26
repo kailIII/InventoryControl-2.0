@@ -86,7 +86,7 @@ public class ProductContainer {
         
     }
     
-    protected void initCBs(
+    public void initCBs(
             List<Category> categories,
             List<Supplier> suppliers,
             List<Measurement> measurements) {
@@ -172,6 +172,18 @@ public class ProductContainer {
 
     public ValidatorUtil getValidator() {
         return validator;
+    }
+
+    public JFXComboBox<Measurement> getMeasurementCB() {
+        return measurementCB;
+    }
+
+    public JFXComboBox<Category> getCategoryCB() {
+        return categoryCB;
+    }
+
+    public JFXComboBox<Supplier> getSupplierCB() {
+        return supplierCB;
     }
     
 }

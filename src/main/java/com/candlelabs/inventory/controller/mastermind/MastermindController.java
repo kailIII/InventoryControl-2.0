@@ -9,29 +9,24 @@ import javafx.scene.layout.AnchorPane;
 
 import com.candlelabs.inventory.controller.interfaces.MastermindInitializer;
 import com.candlelabs.inventory.controller.interfaces.StoreSelectionInitializer;
-import com.candlelabs.inventory.controller.interfaces.ToServer;
 
 import com.candlelabs.inventory.controller.product.ProductController;
 import com.candlelabs.inventory.controller.store.selection.StoreSelectionController;
 
-import com.candlelabs.inventory.model.Category;
 import com.candlelabs.inventory.model.Store;
 import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
 
 import com.candlelabs.inventory.util.FXUtil;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author VakSF
  */
 public class MastermindController extends MastermindContainer 
-        implements Initializable, StoreSelectionInitializer, ToServer {
+        implements Initializable, StoreSelectionInitializer {
     
     private ProductController productController;
-    
     private StoreSelectionController storeSelectionController; 
     
     private CallbackClientImpl client;
@@ -42,22 +37,15 @@ public class MastermindController extends MastermindContainer
     }
     
     @Override
-    public void init(
-            StoreSelectionController controller,
-            CallbackClientImpl client) {
+    public void init(StoreSelectionController controller, CallbackClientImpl client) {
         
         this.storeSelectionController = controller;
         
         this.client = client;
         
-        this.client.init(this);
+        this.client.initMastermind(this);
         
         Store store = this.storeSelectionController.getStore();
-        
-        System.out.println(
-                "Store: " + store.getName() + " - " + store.getTypeStore().getDescription()
-        );
-        
     }
 
     @Override
@@ -118,16 +106,6 @@ public class MastermindController extends MastermindContainer
 
     public CallbackClientImpl getClient() {
         return client;
-    }
-    
-    public void test() {
-        System.out.println("test");
-    }
-
-    @Override
-    public void newCategory(Category category) {
-        System.out.println("Mastermind");
-        System.out.println("New Category");
     }
     
 }

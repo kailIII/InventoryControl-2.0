@@ -7,6 +7,7 @@ import com.candlelabs.inventory.controller.product.ProductController;
 
 import com.candlelabs.inventory.rmi.interfaces.service.CategoryService;
 import com.candlelabs.inventory.model.Category;
+import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
 
 import com.candlelabs.inventory.util.FXUtil;
 import java.io.IOException;
@@ -141,7 +142,11 @@ public class CategoryController extends CategoryContainer
                 category.setId(categoryId);
                 
                 if (this.productController != null) {
-                    this.productController.newCategory(category);
+                    
+                    CallbackClientImpl client = getClient();
+                    
+                    client.getServer().categoryAction(client, category, "create", 0);
+                    
                 }
                 
                 setEditing(false);
@@ -188,6 +193,10 @@ public class CategoryController extends CategoryContainer
                 
                 if (updated) {
                     
+                    CallbackClientImpl client = getClient();
+                    
+                    client.getServer().categoryAction(client, category, "edit", index);
+                    
                     setEditing(false);
                     
                     getCategoriesTV().refresh();
@@ -200,8 +209,9 @@ public class CategoryController extends CategoryContainer
                     ).show();
                     
                     getSubmitB().setText("Crear");
-                    getNameTF().setEditable(false);
                     getSubmitB().setDisable(true);
+                    
+                    getNameTF().setEditable(false);
                     
                 } else {
                     
@@ -240,6 +250,10 @@ public class CategoryController extends CategoryContainer
                     
                     getCategories().remove(category);
                     
+                    CallbackClientImpl client = getClient();
+                    
+                    client.getServer().categoryAction(client, category, "delete", 0);
+                    
                     new Alert(
                             AlertType.INFORMATION,
                             "Categoría eliminada correctamente"
@@ -260,6 +274,11 @@ public class CategoryController extends CategoryContainer
             
         }
         
+    }
+    
+    private CallbackClientImpl getClient() {
+        return this.productController
+                .getMastermindController().getClient();
     }
     
     @FXML
