@@ -20,6 +20,11 @@ import com.candlelabs.inventory.model.Supplier;
 
 import com.candlelabs.inventory.util.FXUtil;
 import com.candlelabs.inventory.util.ValidatorUtil;
+import com.jfoenix.controls.JFXButton;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -36,6 +41,9 @@ public class ProductContainer {
     @FXML
     private JFXTextField nameTF, descriptionTF, unitPriceTF, 
             brandTF, reorderLevelTF, unitsInStockTF;
+    
+    @FXML
+    private JFXButton submitB;
     
     @FXML
     private JFXComboBox<Measurement> measurementCB;
@@ -55,9 +63,11 @@ public class ProductContainer {
     private ObservableList<Product> products;
     
     private ValidatorUtil validator;
+    
+    private boolean editing;
 
     protected ProductContainer() {
-        
+        this.editing = false;
     }
     
     protected void initTV(List<Product> products) {
@@ -80,7 +90,8 @@ public class ProductContainer {
     protected void initValidators() {
         
         this.validator = new ValidatorUtil(
-                nameTF, descriptionTF, unitPriceTF, brandTF, 
+                nameTF, descriptionTF, unitPriceTF,
+                brandTF, reorderLevelTF, unitsInStockTF,
                 categoryCB, supplierCB, measurementCB
         );
         
@@ -102,16 +113,52 @@ public class ProductContainer {
     
     private void updateFields(Product product) {
         
-        if (product != null) {
+        boolean update = true;
+        
+        if (isEditing()) {
             
-            this.nameTF.setText(FXUtil.objectStringValue(product.getName()));
-            this.descriptionTF.setText(FXUtil.objectStringValue(product.getDescription()));
-            this.unitPriceTF.setText(FXUtil.objectStringValue(product.getUnitPrice()));
-            this.brandTF.setText(FXUtil.objectStringValue(product.getBrand()));
+            Optional<ButtonType> result = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Desea salir del modo edición?"
+            ).showAndWait();
             
-            this.categoryCB.setValue(product.getCategory());
-            this.supplierCB.setValue(product.getSupplier());
-            this.measurementCB.setValue(product.getMeasurement());
+            if (result.get() != ButtonType.OK) {
+                update = false;
+            }
+            
+        }
+        
+        if (update) {
+            
+            if (product != null) {
+                
+                getInfoL().setText("Visualizando producto");
+                getInfoL().setTextFill(Color.web("#4596d9"));
+                getValidator().setEditable(false);
+                
+                /**
+                 * 
+                 *  nameTF, descriptionTF, unitPriceTF,
+                    brandTF, reorderLevelTF, unitsInStockTF,
+                    categoryCB, supplierCB, measurementCB
+                 * 
+                 */
+                
+                this.nameTF.setText(FXUtil.objectStringValue(product.getName()));
+                this.descriptionTF.setText(FXUtil.objectStringValue(product.getDescription()));
+                this.unitPriceTF.setText(FXUtil.objectStringValue(product.getUnitPrice()));
+                this.brandTF.setText(FXUtil.objectStringValue(product.getBrand()));
+                
+                this.reorderLevelTF.setText(FXUtil.objectStringValue(product.getReorderLevel()));
+                this.unitsInStockTF.setText(FXUtil.objectStringValue(product.getUnitsInStock()));
+                
+                this.categoryCB.setValue(product.getCategory());
+                this.supplierCB.setValue(product.getSupplier());
+                this.measurementCB.setValue(product.getMeasurement());
+                
+                this.setEditing(false);
+                
+            }
             
         }
         
@@ -121,7 +168,7 @@ public class ProductContainer {
         
         return new Product(
                 
-                "", // -> Generar código? 
+                "code", // -> Generar código? 
                 
                 /**
                  * 
@@ -174,6 +221,42 @@ public class ProductContainer {
         return validator;
     }
 
+    public Label getInfoL() {
+        return infoL;
+    }
+
+    public TableView<Product> getProductsTV() {
+        return productsTV;
+    }
+
+    public JFXTextField getNameTF() {
+        return nameTF;
+    }
+
+    public JFXTextField getDescriptionTF() {
+        return descriptionTF;
+    }
+
+    public JFXTextField getUnitPriceTF() {
+        return unitPriceTF;
+    }
+
+    public JFXTextField getBrandTF() {
+        return brandTF;
+    }
+
+    public JFXTextField getReorderLevelTF() {
+        return reorderLevelTF;
+    }
+
+    public JFXTextField getUnitsInStockTF() {
+        return unitsInStockTF;
+    }
+
+    public ObservableList<Product> getProducts() {
+        return products;
+    }
+
     public JFXComboBox<Measurement> getMeasurementCB() {
         return measurementCB;
     }
@@ -184,6 +267,18 @@ public class ProductContainer {
 
     public JFXComboBox<Supplier> getSupplierCB() {
         return supplierCB;
+    }
+
+    public JFXButton getSubmitB() {
+        return submitB;
+    }
+    
+    public boolean isEditing() {
+        return editing;
+    }
+
+    public void setEditing(boolean editing) {
+        this.editing = editing;
     }
     
 }

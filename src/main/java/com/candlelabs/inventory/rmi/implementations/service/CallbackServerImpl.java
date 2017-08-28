@@ -2,6 +2,7 @@ package com.candlelabs.inventory.rmi.implementations.service;
 
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
 import com.candlelabs.inventory.model.Category;
+import com.candlelabs.inventory.model.Product;
 import java.rmi.server.UnicastRemoteObject;
 
 import java.rmi.RemoteException;
@@ -87,6 +88,30 @@ public class CallbackServerImpl extends UnicastRemoteObject
                 if (!messageResponder.getName().equals(sender.getName())) {
                     
                     messageResponder.categoryAction(category, action, index);
+                    
+                }
+                
+            } catch (RemoteException ex) {
+                System.out.println("Exception: " + ex.toString());
+            }
+            
+        });
+        
+    }
+    
+    @Override
+    public void productAction(
+            MessageResponder sender, Product product, String action, int index) throws RemoteException {
+        
+        this.nameReceiver.values().forEach((PermissionMessageResponder receiver) -> {
+            
+            try {
+                
+                MessageResponder messageResponder = receiver.getMessageResponder();
+                
+                if (!messageResponder.getName().equals(sender.getName())) {
+                    
+                    messageResponder.productAction(product, action, index);
                     
                 }
                 

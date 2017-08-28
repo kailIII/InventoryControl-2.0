@@ -155,7 +155,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="nameTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nombre">
+                                                                                                <JFXTextField fx:id="nameTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nombre">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -174,7 +174,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="descriptionTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
+                                                                                                <JFXTextField fx:id="descriptionTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -193,7 +193,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="unitPriceTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
+                                                                                                <JFXTextField fx:id="unitPriceTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -212,7 +212,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="brandTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
+                                                                                                <JFXTextField fx:id="brandTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -231,7 +231,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="reorderLevelTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nivel de reordenamiento">
+                                                                                                <JFXTextField fx:id="reorderLevelTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nivel de reordenamiento">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -250,7 +250,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="unitsInStockTF" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Cantidad por defecto">
+                                                                                                <JFXTextField fx:id="unitsInStockTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Cantidad por defecto">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -269,7 +269,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXComboBox fx:id="measurementCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Unidad de medida" />
+                                                                                                <JFXComboBox fx:id="measurementCB" disable="true" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Unidad de medida" />
                                                                                             </children>
                                                                                         </HBox>
                                                                                         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
@@ -284,7 +284,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXComboBox fx:id="categoryCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Categoría" />
+                                                                                                <JFXComboBox fx:id="categoryCB" disable="true" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Categoría" />
                                                                                             </children>
                                                                                         </HBox>
                                                                                         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="342.0" spacing="10.0">
@@ -299,10 +299,10 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXComboBox fx:id="supplierCB" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Proveedor" />
+                                                                                                <JFXComboBox fx:id="supplierCB" disable="true" focusColor="#41a9ff" prefHeight="37.0" prefWidth="350.0" promptText="Proveedor" />
                                                                                             </children>
                                                                                         </HBox>
-                                                                                        <JFXButton onAction="#createProduct" prefHeight="45.0" prefWidth="218.0" ripplerFill="#2f9bff" style="-fx-border-color: #2099f5; -fx-border-width: 0.8px;" text="Finalizar registro" />
+                                                                                        <JFXButton fx:id="submitB" disable="true" onAction="#createEdit" prefHeight="45.0" prefWidth="218.0" ripplerFill="#2f9bff" style="-fx-border-color: #2099f5; -fx-border-width: 0.8px;" text="Crear" />
                                                                                     </children>
                                                                                     <padding>
                                                                                         <Insets bottom="20.0" top="20.0" />
@@ -312,7 +312,7 @@
                                                                         </ScrollPane>
                                                                         <ToolBar layoutX="14.0" layoutY="5.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                             <items>
-                                                                                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Nuevo">
+                                                                                <Button mnemonicParsing="false" onAction="#newProduct" prefHeight="30.0" prefWidth="90.0" text="Nuevo">
                                                                                     <graphic>
                                                                                         <MaterialDesignIconView glyphName="LOUPE" size="20.0">
                                                                                             <fill>
@@ -326,9 +326,9 @@
                                                                                         </MaterialDesignIconView>
                                                                                     </graphic>
                                                                                 </Button>
-                                                                                <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="90.0" text="Editar">
+                                                                                <Button mnemonicParsing="false" onAction="#edit" prefHeight="28.0" prefWidth="90.0" text="Editar">
                                                                                     <graphic>
-                                                                                        <MaterialDesignIconView glyphName="APPLE" size="20.0">
+                                                                                        <MaterialDesignIconView glyphName="PENCIL" size="20.0">
                                                                                             <fill>
                                                                                                 <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
                                                                                                     <stops>
@@ -340,23 +340,9 @@
                                                                                         </MaterialDesignIconView>
                                                                                     </graphic>
                                                                                 </Button>
-                                                                                <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" text="Eliminar">
+                                                                                <Button mnemonicParsing="false" onAction="#deleteProduct" prefHeight="30.0" prefWidth="90.0" text="Eliminar">
                                                                                     <graphic>
                                                                                         <MaterialDesignIconView glyphName="DELETE" size="20.0">
-                                                                                            <fill>
-                                                                                                <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
-                                                                                                    <stops>
-                                                                                                        <Stop color="BLACK" />
-                                                                                                        <Stop color="WHITE" offset="1.0" />
-                                                                                                    </stops>
-                                                                                                </LinearGradient>
-                                                                                            </fill>
-                                                                                        </MaterialDesignIconView>
-                                                                                    </graphic>
-                                                                                </Button>
-                                                                                <Button mnemonicParsing="false" prefWidth="90.0" text="Guardar">
-                                                                                    <graphic>
-                                                                                        <MaterialDesignIconView glyphName="LOUPE" size="20.0">
                                                                                             <fill>
                                                                                                 <LinearGradient endX="1.0" endY="1.0" startX="0.29523809523809524">
                                                                                                     <stops>

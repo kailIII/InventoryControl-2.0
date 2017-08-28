@@ -39,7 +39,7 @@ public class CategoryController extends CategoryContainer
     
     private ProductController productController;
     
-    public CategoryService categoryService;
+    private CategoryService categoryService;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -94,39 +94,6 @@ public class CategoryController extends CategoryContainer
         
     }
     
-    @FXML
-    private void newCategory() {
-        
-        getNameTF().setEditable(true);
-        
-        getInfoL().setText("Creando categoría");
-        getInfoL().setTextFill(Color.web("#d3cf43"));
-        
-        setEditing(true);
-        
-        getValidator().clearFields();
-        
-        getProducts().clear();
-        
-        getSubmitB().setDisable(false);
-        getSubmitB().setText("Crear");
-    }
-    
-    @FXML
-    private void edit() {
-        
-        getInfoL().setText("Editando categoría");
-        getInfoL().setTextFill(Color.web("#45d852"));
-        
-        getNameTF().setEditable(true);
-        getNameTF().requestFocus();
-        
-        setEditing(true);
-        
-        getSubmitB().setDisable(false);
-        getSubmitB().setText("Editar");
-    }
-    
     private void createCategory() {
         
         String name = getNameTF().getText();
@@ -143,7 +110,7 @@ public class CategoryController extends CategoryContainer
                 
                 if (this.productController != null) {
                     
-                    CallbackClientImpl client = getClient();
+                    CallbackClientImpl client = this.getClient();
                     
                     client.getServer().categoryAction(client, category, "create", 0);
                     
@@ -160,7 +127,7 @@ public class CategoryController extends CategoryContainer
                         "Categoría creada correctamente"
                 ).show();
                 
-                getNameTF().setEditable(false);
+                getValidator().setEditable(false);
                 getSubmitB().setDisable(true);
                 
             } else {
@@ -185,7 +152,7 @@ public class CategoryController extends CategoryContainer
         
         if (category != null) {
             
-            category.setName(getNameTF().getText());
+            category.editCategory(this.getCategory());
             
             try {
                 
@@ -193,9 +160,13 @@ public class CategoryController extends CategoryContainer
                 
                 if (updated) {
                     
-                    CallbackClientImpl client = getClient();
-                    
-                    client.getServer().categoryAction(client, category, "edit", index);
+                    if (this.productController != null) {
+                        
+                        CallbackClientImpl client = this.getClient();
+                        
+                        client.getServer().categoryAction(client, category, "edit", index);
+                        
+                    }
                     
                     setEditing(false);
                     
@@ -208,10 +179,10 @@ public class CategoryController extends CategoryContainer
                             "Categoría editada correctamente"
                     ).show();
                     
+                    getValidator().setEditable(false);
+                    
                     getSubmitB().setText("Crear");
                     getSubmitB().setDisable(true);
-                    
-                    getNameTF().setEditable(false);
                     
                 } else {
                     
@@ -248,11 +219,15 @@ public class CategoryController extends CategoryContainer
                 
                 if (deleted) {
                     
+                    if (this.productController != null) {
+                        
+                        CallbackClientImpl client = this.getClient();
+                        
+                        client.getServer().categoryAction(client, category, "delete", 0);
+                        
+                    }
+                    
                     getCategories().remove(category);
-                    
-                    CallbackClientImpl client = getClient();
-                    
-                    client.getServer().categoryAction(client, category, "delete", 0);
                     
                     new Alert(
                             AlertType.INFORMATION,
@@ -276,9 +251,37 @@ public class CategoryController extends CategoryContainer
         
     }
     
-    private CallbackClientImpl getClient() {
-        return this.productController
-                .getMastermindController().getClient();
+    @FXML
+    private void newCategory() {
+        
+        getValidator().setEditable(true);
+        
+        getInfoL().setText("Creando categoría");
+        getInfoL().setTextFill(Color.web("#d3cf43"));
+        
+        setEditing(true);
+        
+        getValidator().clearFields();
+        
+        getProducts().clear();
+        
+        getSubmitB().setDisable(false);
+        getSubmitB().setText("Crear");
+    }
+    
+    @FXML
+    private void edit() {
+        
+        getInfoL().setText("Editando categoría");
+        getInfoL().setTextFill(Color.web("#45d852"));
+        
+        getValidator().setEditable(true);
+        getNameTF().requestFocus();
+        
+        setEditing(true);
+        
+        getSubmitB().setDisable(false);
+        getSubmitB().setText("Editar");
     }
     
     @FXML
@@ -287,6 +290,12 @@ public class CategoryController extends CategoryContainer
         if (event.getCode().equals(KeyCode.ENTER)) 
             getSubmitB().fire();
         
+    }
+    
+    private CallbackClientImpl getClient() {
+        
+        return this.productController
+                .getMastermindController().getClient();
     }
     
     private void initServices() {
@@ -301,6 +310,14 @@ public class CategoryController extends CategoryContainer
             
         }
         
+    }
+
+    public CategoryService getCategoryService() {
+        return categoryService;
+    }
+
+    public ProductController getProductController() {
+        return productController;
     }
     
 }

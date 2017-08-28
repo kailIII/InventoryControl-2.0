@@ -47,6 +47,10 @@ public class Category implements Serializable {
         this.products = products;
     }
     
+    public void editCategory(Category category) {
+        this.name = category.getName();
+    }
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id", unique=true, nullable=false)

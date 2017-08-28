@@ -58,7 +58,7 @@ public class CategoryContainer {
     
     private boolean editing;
     
-    public CategoryContainer() {
+    protected CategoryContainer() {
         this.editing = false;
     }
     
@@ -70,7 +70,7 @@ public class CategoryContainer {
         
     }
     
-    protected void initCategories(List<Category> categories) {
+    public void initCategories(List<Category> categories) {
         
         this.categories = FXCollections.observableArrayList();
         
@@ -109,7 +109,7 @@ public class CategoryContainer {
 
         this.categoriesTV.setItems(sortedList);
         
-        this.categories.addAll(categories);
+        this.categories.setAll(categories);
         
         if (!this.categories.isEmpty()) {
             this.categoriesTV.getSelectionModel().selectFirst();
@@ -151,8 +151,8 @@ public class CategoryContainer {
             if (category != null) {
                 
                 getInfoL().setText("Visualizando categoría");
-                
                 getInfoL().setTextFill(Color.web("#4596d9"));
+                getValidator().setEditable(false);
                 
                 List<Product> categoryProducts = category.getProducts();
                 
@@ -165,6 +165,14 @@ public class CategoryContainer {
             }
             
         }
+        
+    }
+    
+    protected Category getCategory() {
+        
+        return new Category(
+                this.nameTF.getText()
+        );
         
     }
 

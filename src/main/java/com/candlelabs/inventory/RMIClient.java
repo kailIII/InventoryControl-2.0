@@ -43,8 +43,6 @@ public class RMIClient extends Application {
                     RMIClient.SERVER_ADDRESS, Registry.REGISTRY_PORT
             );
             
-            System.out.println("Registry Ready");
-            
         } catch (RemoteException ex) {
             
             System.out.println("Exception: " + ex.toString());

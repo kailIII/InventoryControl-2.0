@@ -57,6 +57,21 @@ public class Product implements Serializable {
         this.measurement = measurement;
     }
     
+    public void editProduct(Product product) {
+        
+        this.code = product.getCode();
+        this.description = product.getDescription();
+        this.name = product.getName();
+        this.unitPrice = product.getUnitPrice();
+        this.brand = product.getBrand();
+        this.reorderLevel = product.getReorderLevel();
+        this.unitsInStock = product.getUnitsInStock();
+        this.category = product.getCategory();
+        this.supplier = product.getSupplier();
+        this.measurement = product.getMeasurement();
+        
+    }
+    
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id", unique=true, nullable=false)

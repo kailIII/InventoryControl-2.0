@@ -29,6 +29,10 @@ import javafx.scene.layout.AnchorPane;
 import com.candlelabs.inventory.RMIClient;
 import com.candlelabs.inventory.controller.interfaces.MastermindInitializer;
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
+import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
+import java.util.Optional;
+import javafx.scene.control.ButtonType;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -45,7 +49,7 @@ public class ProductController extends ProductContainer
     private SupplierController supplierController;
     private MeasurementController measurementController;
     
-    public ProductService productService;
+    private ProductService productService;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,26 +81,6 @@ public class ProductController extends ProductContainer
         this.mastermindController = controller;
     }
     
-    @FXML
-    private void createProduct() {
-        
-        if (getValidator().validateFields()) {
-            
-            Product product = getProduct();
-            
-            new Alert(
-                    AlertType.INFORMATION,
-                    product.toString()
-            ).showAndWait();
-            
-        } else {
-            
-            getValidator().emptyFields().show();
-            
-        }
-        
-    }        
-            
     private void initViews() {
         
         this.categoryController = this.initView(
@@ -111,6 +95,200 @@ public class ProductController extends ProductContainer
                 "/view/measurement/Measurement.fxml", 
                 MeasurementController.class, this.getMeasurementPane());
         
+    }
+    
+    @FXML
+    private void createEdit() {
+        
+        if (getValidator().validateFields()) {
+            
+            String action = getSubmitB().getText().toLowerCase();
+            
+            if (action.equals("crear")) {
+                
+                this.createProduct();
+                
+            } else {
+                
+                if (action.equals("editar")) {
+                    
+                    this.editProduct();
+                    
+                }
+                
+            }
+            
+        } else {
+            
+            getValidator().emptyFields().show();
+            
+        }
+        
+    }
+    
+    private void createProduct() {
+            
+        Product product = this.getProduct();
+        
+        try {
+            
+            Integer productId = this.productService.createProduct(product);
+            
+            if (productId != null) {
+                
+                product.setId(productId);
+                
+                this.productAction(product, "create");
+                
+                setEditing(false);
+                
+                getProducts().add(product);
+                getProductsTV().getSelectionModel().select(product);
+                
+                new Alert(
+                        AlertType.INFORMATION,
+                        "Producto creado correctamente"
+                ).show();
+                
+                getValidator().setEditable(false);
+                getSubmitB().setDisable(true);
+                
+            } else {
+                
+                new Alert(
+                        AlertType.ERROR,
+                        "No se ha podido crear el producto. El nombre ya existe"
+                ).show();
+                
+            }
+            
+        } catch (RemoteException ex) {
+            System.out.println("Exception: " + ex.toString());
+        }
+        
+    }
+    
+    private void editProduct() {
+        
+        Product product = FXUtil.selectedTableItem(getProductsTV());
+        int index = FXUtil.selectedTableIndex(getProductsTV());
+        
+        if (product != null) {
+            
+            product.editProduct(this.getProduct());
+            
+            try {
+                
+                boolean updated = this.productService.updateProduct(product);
+                
+                if (updated) {
+                    
+                    this.productAction(product, "edit", index);
+                    
+                    setEditing(false);
+                    
+                    getProductsTV().refresh();
+                    getProductsTV().getSelectionModel().selectFirst();
+                    
+                    new Alert(
+                            AlertType.INFORMATION,
+                            "Producto editado correctamente"
+                    ).show();
+                    
+                    getSubmitB().setText("Crear");
+                    getSubmitB().setDisable(true);
+                    
+                    getNameTF().setEditable(false);
+                    
+                } else {
+                    
+                    new Alert(
+                            AlertType.ERROR,
+                            "El producto no pudo ser editado. El nombre ya existe"
+                    ).show();
+                    
+                }
+                
+            } catch (RemoteException ex) {
+                System.out.println("Exception: " + ex.toString());
+            }
+            
+        }
+        
+    }
+    
+    @FXML
+    private void deleteProduct() {
+        
+        Product product = FXUtil.selectedTableItem(getProductsTV());
+        
+        Optional<ButtonType> result = new Alert(
+                AlertType.CONFIRMATION, 
+                "Está seguro de eliminar el producto '" + product.getName() + "'?"
+        ).showAndWait();
+        
+        if (result.get() == ButtonType.OK) {
+            
+            try {
+                
+                boolean deleted = this.productService.deleteProduct(product);
+                
+                if (deleted) {
+                    
+                    this.productAction(product, "delete");
+                    
+                    getProducts().remove(product);
+                    
+                    new Alert(
+                            AlertType.INFORMATION,
+                            "Producto eliminado correctamente"
+                    ).show();
+                    
+                } else {
+                    
+                    new Alert(
+                            AlertType.ERROR,
+                            "No se ha podido eliminar el producto"
+                    ).show();
+                    
+                }
+                
+            } catch (RemoteException ex) {
+                System.out.println("Exception: " + ex.toString());
+            }
+            
+        }
+        
+    }
+    
+    @FXML
+    private void newProduct() {
+        
+        getInfoL().setText("Creando producto");
+        getInfoL().setTextFill(Color.web("#d3cf43"));
+        
+        getValidator().setEditable(true);
+        getValidator().clearFields();
+        
+        setEditing(true);
+        
+        getSubmitB().setDisable(false);
+        getSubmitB().setText("Crear");
+    }
+    
+    @FXML
+    private void edit() {
+        
+        getInfoL().setText("Editando producto");
+        getInfoL().setTextFill(Color.web("#45d852"));
+        
+        getValidator().setEditable(true);
+        getNameTF().requestFocus();
+        
+        setEditing(true);
+        
+        getSubmitB().setDisable(false);
+        getSubmitB().setText("Editar");
     }
     
     private <T extends ProductInitializer> T initView(
@@ -137,6 +315,26 @@ public class ProductController extends ProductContainer
         
         return controller;
         
+    }
+    
+    private void productAction(Product product, String action, int index) throws RemoteException {
+        
+        if (this.mastermindController != null) {
+            
+            CallbackClientImpl client = this.getClient();
+            
+            client.getServer().productAction(client, product, action, index);
+            
+        }
+        
+    }
+    
+    private void productAction(Product product, String action) throws RemoteException {
+        this.productAction(product, action, 0);
+    }
+    
+    private CallbackClientImpl getClient() {
+        return this.getMastermindController().getClient();
     }
 
     private void initServices() {

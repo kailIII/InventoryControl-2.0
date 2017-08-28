@@ -91,7 +91,7 @@ public class ValidatorUtil {
                     
                 } else {
                     
-                    if (className.equals("ComboBox")) {
+                    if (className.equals("ComboBox") || className.equals("JFXComboBox")) {
                         
                         ComboBox comboBox = (ComboBox) node;
                         
@@ -129,7 +129,7 @@ public class ValidatorUtil {
                     
                 } else {
                     
-                    if (className.equals("ComboBox")) {
+                    if (className.equals("ComboBox") || className.equals("JFXComboBox")) {
                         
                         ComboBox comboBox = (ComboBox) node;
                         
