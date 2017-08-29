@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -17,6 +18,9 @@ public class LoginContainer {
     
     @FXML
     private TextField userTF;
+    
+    @FXML
+    private Button submitB;
     
     @FXML
     private PasswordField passwordPF;
@@ -59,6 +63,10 @@ public class LoginContainer {
 
     public ValidatorUtil getValidator() {
         return validator;
+    }
+
+    public Button getSubmitB() {
+        return submitB;
     }
     
 }

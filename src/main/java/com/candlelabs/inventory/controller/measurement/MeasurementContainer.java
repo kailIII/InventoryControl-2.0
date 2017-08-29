@@ -71,6 +71,10 @@ public class MeasurementContainer{
             
             filteredData.setPredicate((Measurement measurement) -> {
                 
+                this.measurementsTV.getSelectionModel().clearSelection();
+                
+                this.validator.clearFields();
+                
                 if (word == null || word.isEmpty()) {
                     return true;
                 }
@@ -144,9 +148,10 @@ public class MeasurementContainer{
             
             if (measurement != null) {
                 
-                getInfoL().setText("Visualizando unidad");
+                this.infoL.setText("Visualizando unidad");
+                this.infoL.setTextFill(Color.web("#4596d9"));
                 
-                getInfoL().setTextFill(Color.web("#4596d9"));
+                this.validator.setEditable(false);
                 
                 List<Product> measurementProducts = measurement.getProducts();
                 
@@ -159,7 +164,22 @@ public class MeasurementContainer{
                 
             }
             
+        } else {
+            
+            this.validator.clearFields();
+            
+            this.products.clear();
+            
         }
+    }
+    
+    protected Measurement getMeasurement() {
+        
+        return new Measurement(
+                this.nameTF.getText(), 
+                this.abbreviationTF.getText()
+        );
+        
     }
     
     public ObservableList<Measurement> getMeasurements() {
@@ -185,7 +205,6 @@ public class MeasurementContainer{
     public JFXTextField getAbbreviationTF() {
         return abbreviationTF;
     }
-    
 
     public JFXButton getSubmitB() {
         return submitB;

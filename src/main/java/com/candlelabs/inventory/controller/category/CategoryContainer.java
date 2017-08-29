@@ -81,6 +81,10 @@ public class CategoryContainer {
             
             filteredData.setPredicate((Category category) -> {
                 
+                this.categoriesTV.getSelectionModel().clearSelection();
+                
+                this.validator.clearFields();
+                
                 if (word == null || word.isEmpty()) {
                     return true;
                 }
@@ -161,6 +165,12 @@ public class CategoryContainer {
                 this.products.setAll(categoryProducts);
                 
                 this.setEditing(false);
+                
+            } else {
+                
+                this.validator.clearFields();
+                
+                this.products.clear();
                 
             }
             

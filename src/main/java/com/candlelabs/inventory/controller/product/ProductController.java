@@ -32,6 +32,8 @@ import com.candlelabs.inventory.controller.mastermind.MastermindController;
 import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
 import java.util.Optional;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 /**
@@ -58,11 +60,11 @@ public class ProductController extends ProductContainer
         
         try {
             
-            super.initValidators();
+            this.initValidators();
             
-            super.initTV(productService.listProducts());
+            this.initProducts();
             
-            super.initCBs(
+            this.initCBs(
                     this.productService.listCategories(), 
                     this.productService.listSuppliers(), 
                     this.productService.listMeasurements()
@@ -79,6 +81,24 @@ public class ProductController extends ProductContainer
     @Override
     public void init(MastermindController controller) {
         this.mastermindController = controller;
+    }
+    
+    private void initServices() {
+        
+        try {
+            
+            this.productService = (ProductService) RMIClient.getRegistry().lookup("productService");
+            
+        } catch (RemoteException | NotBoundException ex) {
+            
+            System.out.println("Exception: " + ex.toString());
+            
+        }
+        
+    }
+    
+    public void initProducts() throws RemoteException {
+        this.initProducts(productService.listProducts());
     }
     
     private void initViews() {
@@ -198,7 +218,7 @@ public class ProductController extends ProductContainer
                     getSubmitB().setText("Crear");
                     getSubmitB().setDisable(true);
                     
-                    getNameTF().setEditable(false);
+                    getValidator().setEditable(false);
                     
                 } else {
                     
@@ -222,39 +242,43 @@ public class ProductController extends ProductContainer
         
         Product product = FXUtil.selectedTableItem(getProductsTV());
         
-        Optional<ButtonType> result = new Alert(
-                AlertType.CONFIRMATION, 
-                "Está seguro de eliminar el producto '" + product.getName() + "'?"
-        ).showAndWait();
-        
-        if (result.get() == ButtonType.OK) {
+        if (product != null) {
             
-            try {
+            Optional<ButtonType> result = new Alert(
+                    AlertType.CONFIRMATION,
+                    "Está seguro de eliminar el producto '" + product.getName() + "'?"
+            ).showAndWait();
+            
+            if (result.get() == ButtonType.OK) {
                 
-                boolean deleted = this.productService.deleteProduct(product);
-                
-                if (deleted) {
+                try {
                     
-                    this.productAction(product, "delete");
+                    boolean deleted = this.productService.deleteProduct(product);
                     
-                    getProducts().remove(product);
+                    if (deleted) {
+                        
+                        this.productAction(product, "delete");
+                        
+                        getProducts().remove(product);
+                        
+                        new Alert(
+                                AlertType.INFORMATION,
+                                "Producto eliminado correctamente"
+                        ).show();
+                        
+                    } else {
+                        
+                        new Alert(
+                                AlertType.ERROR,
+                                "No se ha podido eliminar el producto"
+                        ).show();
+                        
+                    }
                     
-                    new Alert(
-                            AlertType.INFORMATION,
-                            "Producto eliminado correctamente"
-                    ).show();
-                    
-                } else {
-                    
-                    new Alert(
-                            AlertType.ERROR,
-                            "No se ha podido eliminar el producto"
-                    ).show();
-                    
+                } catch (RemoteException ex) {
+                    System.out.println("Exception: " + ex.toString());
                 }
                 
-            } catch (RemoteException ex) {
-                System.out.println("Exception: " + ex.toString());
             }
             
         }
@@ -317,6 +341,14 @@ public class ProductController extends ProductContainer
         
     }
     
+    @FXML
+    private void submit(KeyEvent event) throws IOException{
+        
+        if (event.getCode().equals(KeyCode.ENTER)) 
+            getSubmitB().fire();
+        
+    }
+    
     private void productAction(Product product, String action, int index) throws RemoteException {
         
         if (this.mastermindController != null) {
@@ -327,6 +359,16 @@ public class ProductController extends ProductContainer
             
         }
         
+        if (this.categoryController != null)
+            this.categoryController.initCategories();
+        
+        if (this.measurementController != null)
+            this.measurementController.initMeasurements();
+        
+        if (this.supplierController != null)
+            this.supplierController.initSuppliers();
+        
+        
     }
     
     private void productAction(Product product, String action) throws RemoteException {
@@ -336,21 +378,7 @@ public class ProductController extends ProductContainer
     private CallbackClientImpl getClient() {
         return this.getMastermindController().getClient();
     }
-
-    private void initServices() {
-        
-        try {
-            
-            this.productService = (ProductService) RMIClient.getRegistry().lookup("productService");
-            
-        } catch (RemoteException | NotBoundException ex) {
-            
-            System.out.println("Exception: " + ex.toString());
-            
-        }
-        
-    }
-
+    
     public MastermindController getMastermindController() {
         return mastermindController;
     }

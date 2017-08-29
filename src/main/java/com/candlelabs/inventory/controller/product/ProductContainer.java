@@ -70,7 +70,7 @@ public class ProductContainer {
         this.editing = false;
     }
     
-    protected void initTV(List<Product> products) {
+    protected void initProducts(List<Product> products) {
         
         this.products = FXCollections.observableArrayList();
         
@@ -132,17 +132,10 @@ public class ProductContainer {
             
             if (product != null) {
                 
-                getInfoL().setText("Visualizando producto");
-                getInfoL().setTextFill(Color.web("#4596d9"));
-                getValidator().setEditable(false);
+                this.infoL.setText("Visualizando producto");
+                this.infoL.setTextFill(Color.web("#4596d9"));
                 
-                /**
-                 * 
-                 *  nameTF, descriptionTF, unitPriceTF,
-                    brandTF, reorderLevelTF, unitsInStockTF,
-                    categoryCB, supplierCB, measurementCB
-                 * 
-                 */
+                this.validator.setEditable(false);
                 
                 this.nameTF.setText(FXUtil.objectStringValue(product.getName()));
                 this.descriptionTF.setText(FXUtil.objectStringValue(product.getDescription()));
@@ -157,6 +150,12 @@ public class ProductContainer {
                 this.measurementCB.setValue(product.getMeasurement());
                 
                 this.setEditing(false);
+                
+            } else {
+                
+                this.validator.clearFields();
+                
+                this.validator.clearFields();
                 
             }
             

@@ -20,6 +20,8 @@ import com.candlelabs.inventory.rmi.interfaces.service.LoginService;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -115,6 +117,14 @@ public class LoginController extends LoginContainer implements Initializable {
         }
         
         return controller;
+        
+    }
+    
+    @FXML
+    private void submit(KeyEvent event) throws IOException{
+        
+        if (event.getCode().equals(KeyCode.ENTER)) 
+            getSubmitB().fire();
         
     }
     

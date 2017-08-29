@@ -144,6 +144,10 @@ public class ValidatorUtil {
         }
         
     }
+
+    public Node[] getNodes() {
+        return nodes;
+    }
     
     public Alert emptyFields() {
         

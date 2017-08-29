@@ -35,10 +35,17 @@ public class Measurement implements Serializable {
     public Measurement() {
         
     }
-
+    
     public Measurement(String name, String abbreviation) {
-       this.name = name;
-       this.abbreviation = abbreviation;
+        this.name = name;
+        this.abbreviation = abbreviation;
+    }
+    
+    public void editMeasurement(Measurement measurement) {
+        
+        this.name = measurement.getName();
+        this.abbreviation = measurement.getAbbreviation();
+        
     }
     
     @Id

@@ -155,7 +155,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="nameTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nombre">
+                                                                                                <JFXTextField fx:id="nameTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nombre">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -174,7 +174,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="descriptionTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
+                                                                                                <JFXTextField fx:id="descriptionTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -193,7 +193,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="unitPriceTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
+                                                                                                <JFXTextField fx:id="unitPriceTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -212,7 +212,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="brandTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
+                                                                                                <JFXTextField fx:id="brandTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -231,7 +231,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="reorderLevelTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nivel de reordenamiento">
+                                                                                                <JFXTextField fx:id="reorderLevelTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nivel de reordenamiento">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -250,7 +250,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="unitsInStockTF" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Cantidad por defecto">
+                                                                                                <JFXTextField fx:id="unitsInStockTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Cantidad por defecto">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>

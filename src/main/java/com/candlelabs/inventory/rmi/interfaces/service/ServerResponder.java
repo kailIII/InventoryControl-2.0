@@ -1,7 +1,10 @@
 package com.candlelabs.inventory.rmi.interfaces.service;
 
-import com.candlelabs.inventory.model.Category;
 import com.candlelabs.inventory.model.Product;
+import com.candlelabs.inventory.model.Category;
+import com.candlelabs.inventory.model.Measurement;
+import com.candlelabs.inventory.model.Supplier;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Collection;
@@ -18,9 +21,13 @@ public interface ServerResponder extends Remote {
     public boolean unregister(MessageResponder receiver) throws RemoteException;
     
     
+    public void productAction(MessageResponder sender, Product product, String action, int index) throws RemoteException;
+    
     public void categoryAction(MessageResponder sender, Category category, String action, int index) throws RemoteException;
     
-    public void productAction(MessageResponder sender, Product product, String action, int index) throws RemoteException;
+    public void measurementAction(MessageResponder sender, Measurement measurement, String action, int index) throws RemoteException;
+    
+    public void supplierAction(MessageResponder sender, Supplier supplier, String action, int index) throws RemoteException;
     
     
     public void sendMessage(MessageResponder sender, String message) throws RemoteException;

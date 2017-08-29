@@ -4,14 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name="supplier")
@@ -40,6 +42,16 @@ public class Supplier implements Serializable {
         this.city = city;
         this.country = country;
         this.phone = phone;
+    }
+    
+    public void editSupplier(Supplier supplier) {
+        
+        this.company = supplier.getCompany();
+        this.contact = supplier.getContact();
+        this.address = supplier.getAddress();
+        this.city = supplier.getCity();
+        this.country = supplier.getCountry();
+        this.phone = supplier.getPhone();
     }
     
     @Id 
@@ -107,7 +119,8 @@ public class Supplier implements Serializable {
         this.phone = phone;
     }
     
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="supplier")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
     public List<Product> getProducts() {
         return this.products;
     }

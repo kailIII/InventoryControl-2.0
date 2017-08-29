@@ -37,6 +37,7 @@ import javafx.scene.paint.Color;
 public class CategoryController extends CategoryContainer 
         implements Initializable, ProductInitializer {
     
+    // Belongs to
     private ProductController productController;
     
     private CategoryService categoryService;
@@ -52,7 +53,7 @@ public class CategoryController extends CategoryContainer
             
             this.initProducts();
             
-            this.initCategories(this.categoryService.listCategories());
+            this.initCategories();
             
         } catch (RemoteException ex) {
             
@@ -63,6 +64,24 @@ public class CategoryController extends CategoryContainer
     @Override
     public void init(ProductController controller) {
         this.productController = controller;
+    }
+    
+    private void initServices() {
+        
+        try {
+            
+            this.categoryService = (CategoryService) RMIClient.getRegistry().lookup("categoryService");
+            
+        } catch (RemoteException | NotBoundException ex) {
+            
+            System.out.println("Exception: " + ex.toString());
+            
+        }
+        
+    }
+    
+    public void initCategories() throws RemoteException {
+        this.initCategories(this.categoryService.listCategories());
     }
     
     @FXML
@@ -96,9 +115,7 @@ public class CategoryController extends CategoryContainer
     
     private void createCategory() {
         
-        String name = getNameTF().getText();
-            
-        Category category = new Category(name);
+        Category category = this.getCategory();
         
         try {
             
@@ -108,18 +125,11 @@ public class CategoryController extends CategoryContainer
                 
                 category.setId(categoryId);
                 
-                if (this.productController != null) {
-                    
-                    CallbackClientImpl client = this.getClient();
-                    
-                    client.getServer().categoryAction(client, category, "create", 0);
-                    
-                }
+                this.categoryAction(category, "create");
                 
                 setEditing(false);
                 
                 getCategories().add(category);
-                
                 getCategoriesTV().getSelectionModel().select(category);
                 
                 new Alert(
@@ -160,18 +170,11 @@ public class CategoryController extends CategoryContainer
                 
                 if (updated) {
                     
-                    if (this.productController != null) {
-                        
-                        CallbackClientImpl client = this.getClient();
-                        
-                        client.getServer().categoryAction(client, category, "edit", index);
-                        
-                    }
+                    this.categoryAction(category, "edit", index);
                     
                     setEditing(false);
                     
                     getCategoriesTV().refresh();
-                    
                     getCategoriesTV().getSelectionModel().selectFirst();
                     
                     new Alert(
@@ -206,45 +209,43 @@ public class CategoryController extends CategoryContainer
         
         Category category = FXUtil.selectedTableItem(getCategoriesTV());
         
-        Optional<ButtonType> result = new Alert(
-                AlertType.CONFIRMATION, 
-                "Está seguro de eliminar la categoría '" + category.getName() + "'?"
-        ).showAndWait();
-        
-        if (result.get() == ButtonType.OK) {
+        if (category != null) {
             
-            try {
+            Optional<ButtonType> result = new Alert(
+                    AlertType.CONFIRMATION,
+                    "Está seguro de eliminar la categoría '" + category.getName() + "'?"
+            ).showAndWait();
+            
+            if (result.get() == ButtonType.OK) {
                 
-                boolean deleted = this.categoryService.deleteCategory(category);
-                
-                if (deleted) {
+                try {
                     
-                    if (this.productController != null) {
+                    boolean deleted = this.categoryService.deleteCategory(category);
+                    
+                    if (deleted) {
                         
-                        CallbackClientImpl client = this.getClient();
+                        this.categoryAction(category, "delete");
                         
-                        client.getServer().categoryAction(client, category, "delete", 0);
+                        getCategories().remove(category);
+                        
+                        new Alert(
+                                AlertType.INFORMATION,
+                                "Categoría eliminada correctamente"
+                        ).show();
+                        
+                    } else {
+                        
+                        new Alert(
+                                AlertType.ERROR,
+                                "No se ha podido eliminar la categoría"
+                        ).show();
                         
                     }
                     
-                    getCategories().remove(category);
-                    
-                    new Alert(
-                            AlertType.INFORMATION,
-                            "Categoría eliminada correctamente"
-                    ).show();
-                    
-                } else {
-                    
-                    new Alert(
-                            AlertType.ERROR,
-                            "No se ha podido eliminar la categoría"
-                    ).show();
-                    
+                } catch (RemoteException ex) {
+                    System.out.println("Exception: " + ex.toString());
                 }
                 
-            } catch (RemoteException ex) {
-                System.out.println("Exception: " + ex.toString());
             }
             
         }
@@ -292,32 +293,56 @@ public class CategoryController extends CategoryContainer
         
     }
     
+    private void categoryAction(Category category, String action, int index) throws RemoteException {
+        
+        if (this.productController != null) {
+            
+            CallbackClientImpl client = this.getClient();
+            
+            client.getServer().categoryAction(client, category, action, index);
+            
+            if (action.equals("create")) {
+                
+                this.productController.getCategories().add(category);
+                
+            } else {
+                
+                if (action.equals("edit")) {
+                    
+                    this.productController.initProducts();
+                    
+                } else {
+                    
+                    if (action.equals("delete")) {
+                        
+                        this.productController.getCategories().remove(category);
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    private void categoryAction(Category category, String action) throws RemoteException {
+        this.categoryAction(category, action, 0);
+    }
+    
     private CallbackClientImpl getClient() {
         
         return this.productController
                 .getMastermindController().getClient();
     }
     
-    private void initServices() {
-        
-        try {
-            
-            this.categoryService = (CategoryService) RMIClient.getRegistry().lookup("categoryService");
-            
-        } catch (RemoteException | NotBoundException ex) {
-            
-            System.out.println("Exception: " + ex.toString());
-            
-        }
-        
-    }
-
-    public CategoryService getCategoryService() {
-        return categoryService;
-    }
-
     public ProductController getProductController() {
         return productController;
+    }
+    
+    public CategoryService getCategoryService() {
+        return categoryService;
     }
     
 }

@@ -2,10 +2,14 @@ package com.candlelabs.inventory.rmi.implementations.service;
 
 import com.candlelabs.inventory.controller.category.CategoryController;
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
+import com.candlelabs.inventory.controller.measurement.MeasurementController;
 import com.candlelabs.inventory.controller.product.ProductController;
 import com.candlelabs.inventory.controller.store.StoreController;
+import com.candlelabs.inventory.controller.supplier.SupplierController;
 import com.candlelabs.inventory.model.Category;
+import com.candlelabs.inventory.model.Measurement;
 import com.candlelabs.inventory.model.Product;
+import com.candlelabs.inventory.model.Supplier;
 
 import com.candlelabs.inventory.rmi.interfaces.service.MessageResponder;
 import com.candlelabs.inventory.rmi.interfaces.service.ServerResponder;
@@ -80,6 +84,82 @@ public class CallbackClientImpl extends UnicastRemoteObject
     }
     
     @Override
+    public void productAction(Product product, String action, int index) throws RemoteException {
+        
+        Platform.runLater(() -> {
+            
+            if (mastermindController != null) {
+
+                ProductController productCtrl =
+                        mastermindController
+                                .getProductController();
+
+                CategoryController categoryCtrl = 
+                        productCtrl
+                                .getCategoryController();
+
+                if (action.equalsIgnoreCase("create")) {
+
+                    try {
+                        
+                        productCtrl
+                                .getProducts()
+                                .add(product);
+                        
+                        categoryCtrl
+                                .initCategories(
+                                        categoryCtrl
+                                                .getCategoryService()
+                                                .listCategories()
+                                );
+                        
+                    } catch (RemoteException ex) {
+                        System.out.println("Exception: " + ex.toString());
+                    }
+
+                } else {
+                    
+                    if (action.equalsIgnoreCase("edit")) {
+                        
+                        try {
+                            
+                            productCtrl.initProducts();
+                            
+                            productCtrl.getProductsTV().refresh();
+                            
+                        } catch (RemoteException ex) {
+                            System.out.println("Exception: " + ex.toString());
+                        }
+                        
+                    } else {
+                        
+                        if (action.equalsIgnoreCase("delete")) {
+                            
+                            try {
+                                
+                                categoryCtrl.initCategories();
+                                
+                                productCtrl
+                                        .getProducts()
+                                        .remove(product);
+                                
+                            } catch (RemoteException ex) {
+                                
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+            
+        });
+        
+    }
+    
+    @Override
     public void categoryAction(Category category, String action, int index) throws RemoteException {
         
         Platform.runLater(() -> {
@@ -119,11 +199,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
                                                     .listCategories()
                                     );
                             
-                            Category toEdit = categoryCtrl
-                                    .getCategories()
-                                    .get(index);
-                            
-                            toEdit.editCategory(category);
+                            categoryCtrl.initCategories();
                             
                             categoryCtrl.getCategoriesTV().refresh();
                             
@@ -142,8 +218,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
                             categoryCtrl
                                     .getCategories()
                                     .remove(category);
-
-
+                            
                         }
 
                     }
@@ -157,7 +232,8 @@ public class CallbackClientImpl extends UnicastRemoteObject
     }
     
     @Override
-    public void productAction(Product product, String action, int index) throws RemoteException {
+    public void measurementAction(
+            Measurement measurement, String action, int index) throws RemoteException {
         
         Platform.runLater(() -> {
             
@@ -167,49 +243,128 @@ public class CallbackClientImpl extends UnicastRemoteObject
                         mastermindController
                                 .getProductController();
 
-                CategoryController categoryCtrl = 
-                        productCtrl
-                                .getCategoryController();
+                MeasurementController measurementCtrl =
+                        mastermindController
+                                .getProductController()
+                                .getMeasurementController();
 
                 if (action.equalsIgnoreCase("create")) {
 
-                    try {
-                        
-                        productCtrl
-                                .getProducts()
-                                .add(product);
-                        
-                        categoryCtrl
-                                .initCategories(
-                                        categoryCtrl
-                                                .getCategoryService()
-                                                .listCategories()
-                                );
-                        
-                    } catch (RemoteException ex) {
-                        System.out.println("Exception: " + ex.toString());
-                    }
+                    productCtrl
+                            .getMeasurements()
+                            .add(measurement);
+
+                    measurementCtrl
+                            .getMeasurements()
+                            .add(measurement);
 
                 } else {
 
                     if (action.equalsIgnoreCase("edit")) {
 
-                        Product toEdit = productCtrl
-                                .getProducts()
-                                .get(index);
-
-                        toEdit.editProduct(product);
-
-                        productCtrl.getProductsTV().refresh();
+                        try {
+                            
+                            productCtrl
+                                    .getMeasurementCB()
+                                    .getItems()
+                                    .setAll(
+                                            productCtrl.getProductService()
+                                                    .listMeasurements()
+                                    );
+                            
+                            measurementCtrl.initMeasurements();
+                            
+                            measurementCtrl.getMeasurementsTV().refresh();
+                            
+                        } catch (RemoteException ex) {
+                            System.out.println("Exception: " + ex.toString());
+                        }
 
                     } else {
 
                         if (action.equalsIgnoreCase("delete")) {
 
                             productCtrl
-                                    .getProducts()
-                                    .remove(product);
+                                    .getMeasurements()
+                                    .remove(measurement);
 
+                            measurementCtrl
+                                    .getMeasurements()
+                                    .remove(measurement);
+                            
+                        }
+
+                    }
+
+                }
+
+            }
+            
+        });
+        
+    }
+
+    @Override
+    public void supplierAction(
+            Supplier supplier, String action, int index) throws RemoteException {
+        
+        Platform.runLater(() -> {
+            
+            if (mastermindController != null) {
+
+                ProductController productCtrl =
+                        mastermindController
+                                .getProductController();
+
+                SupplierController supplierCtrl =
+                        mastermindController
+                                .getProductController()
+                                .getSupplierController();
+
+                if (action.equalsIgnoreCase("create")) {
+
+                    productCtrl
+                            .getSuppliers()
+                            .add(supplier);
+
+                    supplierCtrl
+                            .getSuppliers()
+                            .add(supplier);
+
+                } else {
+
+                    if (action.equalsIgnoreCase("edit")) {
+                        
+                        try {
+                            
+                            productCtrl
+                                    .getSupplierCB()
+                                    .getItems()
+                                    .setAll(
+                                            productCtrl.getProductService()
+                                                    .listSuppliers()
+                                    );
+                            
+                            supplierCtrl.initSuppliers();
+                            
+                            supplierCtrl.getSuppliersTV().refresh();
+                            
+                        } catch (RemoteException ex) {
+                            System.out.println("Exception: " + ex.toString());
+                        }
+
+                    } else {
+
+                        if (action.equalsIgnoreCase("delete")) {
+
+                            productCtrl
+                                    .getSuppliers()
+                                    .remove(supplier);
+
+                            supplierCtrl
+                                    .getSuppliers()
+                                    .remove(supplier);
+                            
                         }
 
                     }

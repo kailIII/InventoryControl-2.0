@@ -2,7 +2,9 @@ package com.candlelabs.inventory.rmi.implementations.service;
 
 import com.candlelabs.inventory.controller.mastermind.MastermindController;
 import com.candlelabs.inventory.model.Category;
+import com.candlelabs.inventory.model.Measurement;
 import com.candlelabs.inventory.model.Product;
+import com.candlelabs.inventory.model.Supplier;
 import java.rmi.server.UnicastRemoteObject;
 
 import java.rmi.RemoteException;
@@ -76,6 +78,30 @@ public class CallbackServerImpl extends UnicastRemoteObject
     }
 
     @Override
+    public void productAction(
+            MessageResponder sender, Product product, String action, int index) throws RemoteException {
+        
+        this.nameReceiver.values().forEach((PermissionMessageResponder receiver) -> {
+            
+            try {
+                
+                MessageResponder messageResponder = receiver.getMessageResponder();
+                
+                if (!messageResponder.getName().equals(sender.getName())) {
+                    
+                    messageResponder.productAction(product, action, index);
+                    
+                }
+                
+            } catch (RemoteException ex) {
+                System.out.println("Exception: " + ex.toString());
+            }
+            
+        });
+        
+    }
+    
+    @Override
     public void categoryAction(
             MessageResponder sender, Category category, String action, int index) throws RemoteException {
         
@@ -100,8 +126,8 @@ public class CallbackServerImpl extends UnicastRemoteObject
     }
     
     @Override
-    public void productAction(
-            MessageResponder sender, Product product, String action, int index) throws RemoteException {
+    public void measurementAction(
+            MessageResponder sender, Measurement measurement, String action, int index) throws RemoteException {
         
         this.nameReceiver.values().forEach((PermissionMessageResponder receiver) -> {
             
@@ -111,7 +137,31 @@ public class CallbackServerImpl extends UnicastRemoteObject
                 
                 if (!messageResponder.getName().equals(sender.getName())) {
                     
-                    messageResponder.productAction(product, action, index);
+                    messageResponder.measurementAction(measurement, action, index);
+                    
+                }
+                
+            } catch (RemoteException ex) {
+                System.out.println("Exception: " + ex.toString());
+            }
+            
+        });
+        
+    }
+    
+    @Override
+    public void supplierAction(
+            MessageResponder sender, Supplier supplier, String action, int index) throws RemoteException {
+        
+        this.nameReceiver.values().forEach((PermissionMessageResponder receiver) -> {
+            
+            try {
+                
+                MessageResponder messageResponder = receiver.getMessageResponder();
+                
+                if (!messageResponder.getName().equals(sender.getName())) {
+                    
+                    messageResponder.supplierAction(supplier, action, index);
                     
                 }
                 
@@ -155,13 +205,13 @@ public class CallbackServerImpl extends UnicastRemoteObject
     @Override
     public Hashtable<String, MessageResponder> getUsers() throws RemoteException {
         
-        Hashtable<String, MessageResponder> tempRes = new Hashtable<>();
+        Hashtable<String, MessageResponder> users = new Hashtable<>();
         
-        for (String name : this.nameReceiver.keySet()) {
-            tempRes.put(name, this.nameReceiver.get(name).getMessageResponder());
-        }
+        this.nameReceiver.keySet().forEach((name) -> {
+            users.put(name, this.nameReceiver.get(name).getMessageResponder());
+        });
         
-        return tempRes;
+        return users;
         
     }
 
@@ -180,13 +230,11 @@ public class CallbackServerImpl extends UnicastRemoteObject
         
         Collection<MessageResponder> resp = new HashSet<>();
         
-        for (PermissionMessageResponder perm : nameReceiver.values()) {
+        nameReceiver.values().forEach((perm) -> {
             resp.add(perm.getMessageResponder());
-        }
+        });
         
         return resp;
     }
-    
-    
     
 }

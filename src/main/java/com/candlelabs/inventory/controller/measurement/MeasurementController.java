@@ -4,6 +4,7 @@ import com.candlelabs.inventory.RMIClient;
 import com.candlelabs.inventory.controller.interfaces.ProductInitializer;
 import com.candlelabs.inventory.controller.product.ProductController;
 import com.candlelabs.inventory.model.Measurement;
+import com.candlelabs.inventory.rmi.implementations.service.CallbackClientImpl;
 import com.candlelabs.inventory.rmi.interfaces.service.MeasurementService;
 import com.candlelabs.inventory.util.FXUtil;
 import java.io.IOException;
@@ -12,8 +13,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -29,6 +28,7 @@ import javafx.scene.paint.Color;
 public class MeasurementController extends MeasurementContainer 
         implements Initializable, ProductInitializer {
     
+    // Belongs to
     private ProductController productController;
     
     public MeasurementService measurementService;
@@ -44,7 +44,7 @@ public class MeasurementController extends MeasurementContainer
             
             this.initProducts();
             
-            this.initMeasurements(this.measurementService.listMeasurements());
+            this.initMeasurements();
             
         } catch (RemoteException ex) {
             
@@ -55,6 +55,25 @@ public class MeasurementController extends MeasurementContainer
     @Override
     public void init(ProductController controller) {
         this.productController = controller;
+    }
+    
+    private void initServices() {
+        
+        try {
+            
+            this.measurementService = (MeasurementService) 
+                    RMIClient.getRegistry().lookup("measurementService");
+            
+        } catch (RemoteException | NotBoundException ex) {
+            
+            System.out.println("Exception: " + ex.toString());
+            
+        }
+        
+    }
+    
+    public void initMeasurements() throws RemoteException {
+        this.initMeasurements(this.measurementService.listMeasurements());
     }
     
     @FXML
@@ -121,11 +140,8 @@ public class MeasurementController extends MeasurementContainer
     }
     
     private void createMeasurement() {
-        
-        String name = getNameTF().getText();
-        String abbreviation = getAbbreviationTF().getText();
             
-        Measurement measurement = new Measurement(name, abbreviation);
+        Measurement measurement = this.getMeasurement();
         
         try {
             
@@ -135,14 +151,11 @@ public class MeasurementController extends MeasurementContainer
                 
                 measurement.setId(measurementId);
                 
-                if (this.productController != null) {
-                    //this.productController.newCategory(measurement);
-                }
+                this.measurementAction(measurement, "create");
                 
                 setEditing(false);
                 
                 getMeasurements().add(measurement);
-                
                 getMeasurementsTV().getSelectionModel().select(measurement);
                 
                 new Alert(
@@ -177,7 +190,7 @@ public class MeasurementController extends MeasurementContainer
         
         if (measurement != null) {
             
-            measurement.setName(getNameTF().getText());
+            measurement.editMeasurement(this.getMeasurement());
             
             try {
                 
@@ -185,10 +198,11 @@ public class MeasurementController extends MeasurementContainer
                 
                 if (updated) {
                     
+                    this.measurementAction(measurement, "edit", index);
+                    
                     setEditing(false);
                     
                     getMeasurementsTV().refresh();
-                    
                     getMeasurementsTV().getSelectionModel().selectFirst();
                     
                     new Alert(
@@ -224,37 +238,43 @@ public class MeasurementController extends MeasurementContainer
         
         Measurement measurement = FXUtil.selectedTableItem(getMeasurementsTV());
         
-        Optional<ButtonType> result = new Alert(
-                Alert.AlertType.CONFIRMATION, 
-                "Está seguro de eliminar la medida '" + measurement.getName() + "'?"
-        ).showAndWait();
-        
-        if (result.get() == ButtonType.OK) {
+        if (measurement != null) {
             
-            try {
+            Optional<ButtonType> result = new Alert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Está seguro de eliminar la medida '" + measurement.getName() + "'?"
+            ).showAndWait();
+            
+            if (result.get() == ButtonType.OK) {
                 
-                boolean deleted = this.measurementService.deleteMeasurement(measurement);
-                
-                if (deleted) {
+                try {
                     
-                    getMeasurements().remove(measurement);
+                    boolean deleted = this.measurementService.deleteMeasurement(measurement);
                     
-                    new Alert(
-                            Alert.AlertType.INFORMATION,
-                            "Medida eliminada correctamente"
-                    ).show();
+                    if (deleted) {
+                        
+                        this.measurementAction(measurement, "delete");
+                        
+                        getMeasurements().remove(measurement);
+                        
+                        new Alert(
+                                Alert.AlertType.INFORMATION,
+                                "Medida eliminada correctamente"
+                        ).show();
+                        
+                    } else {
+                        
+                        new Alert(
+                                Alert.AlertType.ERROR,
+                                "No se ha podido eliminar la medida"
+                        ).show();
+                        
+                    }
                     
-                } else {
-                    
-                    new Alert(
-                            Alert.AlertType.ERROR,
-                            "No se ha podido eliminar la medida"
-                    ).show();
-                    
+                } catch (RemoteException ex) {
+                    System.out.println("Exception: " + ex.toString());
                 }
                 
-            } catch (RemoteException ex) {
-                System.out.println("Exception: " + ex.toString());
             }
             
         }
@@ -269,19 +289,56 @@ public class MeasurementController extends MeasurementContainer
         
     }
     
-    private void initServices() {
+    private void measurementAction(Measurement measurement, String action, int index) throws RemoteException {
         
-        try {
+        if (this.productController != null) {
             
-            this.measurementService = (MeasurementService) 
-                    RMIClient.getRegistry().lookup("measurementService");
+            CallbackClientImpl client = this.getClient();
             
-        } catch (RemoteException | NotBoundException ex) {
+            client.getServer().measurementAction(client, measurement, action, index);
             
-            System.out.println("Exception: " + ex.toString());
+            if (action.equals("create")) {
+                
+                this.productController.getMeasurements().add(measurement);
+                
+            } else {
+                
+                if (action.equals("edit")) {
+                    
+                    this.productController.initProducts();
+                    
+                } else {
+                    
+                    if (action.equals("delete")) {
+                        
+                        this.productController.getMeasurements().remove(measurement);
+                        
+                    }
+                    
+                }
+                
+            }
             
         }
         
+    }
+    
+    private void measurementAction(Measurement measurement, String action) throws RemoteException {
+        this.measurementAction(measurement, action, 0);
+    }
+    
+    private CallbackClientImpl getClient() {
+        
+        return this.productController
+                .getMastermindController().getClient();
+    }
+    
+    public ProductController getProductController() {
+        return productController;
+    }
+
+    public MeasurementService getMeasurementService() {
+        return measurementService;
     }
     
 }
