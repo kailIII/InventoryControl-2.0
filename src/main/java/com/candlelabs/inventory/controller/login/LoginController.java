@@ -18,8 +18,13 @@ import com.candlelabs.inventory.model.User;
 import com.candlelabs.inventory.rmi.interfaces.service.LoginService;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -41,43 +46,61 @@ public class LoginController extends LoginContainer implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        this.initValidators();
+        
         try {
             
             this.loginService = (LoginService) RMIClient.getRegistry().lookup("loginService");
             
         } catch (RemoteException | NotBoundException ex) {
+            
+            new Alert(
+                    AlertType.ERROR,
+                    "No se ha podido crear conexión con el servidor remoto"
+            ).show();
+            
             System.out.println("Exception: " + ex.toString());
+            
         }
-        
-        this.initValidators();
         
     }
     
     @FXML
-    private void login(ActionEvent event) throws RemoteException, IOException {
+    private void login(ActionEvent event) throws IOException {
         
         if (getValidator().validateFields()) {
             
             String username = getUserTF().getText();
             String password = getPasswordPF().getText();
             
-            User user = this.loginService.login(username, password);
-            
-            if (user != null) {
+            try {
                 
-                this.loggedUser = user;
+                User user = this.loginService.login(username, password);
                 
-                this.storeSelectionController = this.initView(
-                        "/view/store/selection/StoreSelection.fxml",
-                        StoreSelectionController.class,
-                        "Seleccionar ubicación - Control de inventario"
-                );
+                if (user != null) {
+                    
+                    this.loggedUser = user;
+                    
+                    this.storeSelectionController = this.initView(
+                            "/view/store/selection/StoreSelection.fxml",
+                            StoreSelectionController.class,
+                            "Seleccionar ubicación - Control de inventario"
+                    );
+                    
+                    this.close(event);
+                    
+                } else {
+                    
+                    this.notFound();
+                    
+                }
                 
-                this.close(event);
+            } catch (NullPointerException | RemoteException ex) {
                 
-            } else {
-                
-                this.notFound();
+                new Alert(
+                        AlertType.ERROR,
+                        "No se ha podido crear conexión con el servidor remoto"
+                ).show();
                 
             }
             

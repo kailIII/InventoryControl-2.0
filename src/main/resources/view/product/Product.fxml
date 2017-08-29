@@ -42,7 +42,7 @@
                                                             <children>
                                                                 <AnchorPane layoutX="145.0" layoutY="139.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                     <children>
-                                                                        <VBox alignment="CENTER" layoutX="51.0" layoutY="185.0" prefHeight="181.0" prefWidth="209.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                                                        <VBox alignment="TOP_CENTER" layoutX="51.0" layoutY="185.0" prefHeight="154.0" prefWidth="235.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                                                             <children>
                                                                                 <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
                                                                                     <children>
@@ -56,16 +56,7 @@
                                                                                 <HBox alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
                                                                                     <children>
                                                                                         <Label text="Producto:" />
-                                                                                        <JFXTextField focusColor="#2099f5" />
-                                                                                    </children>
-                                                                                    <VBox.margin>
-                                                                                        <Insets right="25.0" />
-                                                                                    </VBox.margin>
-                                                                                </HBox>
-                                                                                <HBox alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
-                                                                                    <children>
-                                                                                        <Label text="Categoría:" />
-                                                                                        <JFXTextField focusColor="#2099f5" />
+                                                                                        <JFXTextField fx:id="productNameTF" focusColor="#2099f5" prefHeight="25.0" prefWidth="144.0" />
                                                                                     </children>
                                                                                     <VBox.margin>
                                                                                         <Insets right="25.0" />
@@ -74,23 +65,28 @@
                                                                                 <HBox alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
                                                                                     <children>
                                                                                         <Label text="Descripción:" />
-                                                                                        <JFXTextField focusColor="#2099f5" />
+                                                                                        <JFXTextField fx:id="productDescriptionTF" focusColor="#2099f5" />
                                                                                     </children>
                                                                                     <VBox.margin>
                                                                                         <Insets right="25.0" />
                                                                                     </VBox.margin>
                                                                                 </HBox>
-                                                                                <HBox alignment="CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
+                                                                                <HBox alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
                                                                                     <children>
-                                                                                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Actualizar" />
+                                                                                        <Label text="Categoría:" />
+                                                                  <JFXComboBox fx:id="productCategoryCB" focusColor="#41a9ff" prefHeight="25.0" prefWidth="135.0" promptText="Buscar por ">
+                                                                     <HBox.margin>
+                                                                        <Insets />
+                                                                     </HBox.margin>
+                                                                  </JFXComboBox>
                                                                                     </children>
-                                                                                    <padding>
-                                                                                        <Insets left="75.0" />
-                                                                                    </padding>
+                                                                                    <VBox.margin>
+                                                                                        <Insets right="25.0" />
+                                                                                    </VBox.margin>
                                                                                 </HBox>
                                                                             </children>
                                                                         </VBox>
-                                                                        <TableView fx:id="productsTV" layoutX="19.0" layoutY="256.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="200.0">
+                                                                        <TableView fx:id="productsTV" layoutX="19.0" layoutY="158.0" prefHeight="461.0" prefWidth="235.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="160.0">
                                                                             <columns>
                                                                                 <TableColumn minWidth="50.0" prefWidth="89.0" text="Categoría">
                                                                                     <cellValueFactory>
@@ -155,7 +151,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="nameTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nombre">
+                                                                                                <JFXTextField fx:id="nameTF" editable="false" focusColor="#86b4c2" labelFloat="true" onKeyPressed="#submit" prefHeight="36.0" prefWidth="350.0" promptText="Nombre">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -174,7 +170,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="descriptionTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
+                                                                                                <JFXTextField fx:id="descriptionTF" editable="false" focusColor="#86b4c2" labelFloat="true" onKeyPressed="#submit" prefHeight="36.0" prefWidth="350.0" promptText="Descripción">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -193,7 +189,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="unitPriceTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
+                                                                                                <JFXTextField fx:id="unitPriceTF" editable="false" focusColor="#86b4c2" labelFloat="true" onKeyPressed="#submit" prefHeight="36.0" prefWidth="350.0" promptText="Precio">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -212,7 +208,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="brandTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
+                                                                                                <JFXTextField fx:id="brandTF" editable="false" focusColor="#86b4c2" labelFloat="true" onKeyPressed="#submit" prefHeight="36.0" prefWidth="350.0" promptText="Marca">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -231,7 +227,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="reorderLevelTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Nivel de reordenamiento">
+                                                                                                <JFXTextField fx:id="reorderLevelTF" editable="false" focusColor="#86b4c2" labelFloat="true" onKeyPressed="#submit" prefHeight="36.0" prefWidth="350.0" promptText="Nivel de reordenamiento">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>
@@ -250,7 +246,7 @@
                                                                                                         </LinearGradient>
                                                                                                     </fill>
                                                                                                 </MaterialDesignIconView>
-                                                                                                <JFXTextField fx:id="unitsInStockTF" onKeyPressed="#submit" editable="false" focusColor="#86b4c2" labelFloat="true" prefHeight="36.0" prefWidth="350.0" promptText="Cantidad por defecto">
+                                                                                                <JFXTextField fx:id="unitsInStockTF" editable="false" focusColor="#86b4c2" labelFloat="true" onKeyPressed="#submit" prefHeight="36.0" prefWidth="350.0" promptText="Cantidad por defecto">
                                                                                                     <font>
                                                                                                         <Font size="14.0" />
                                                                                                     </font>

@@ -22,6 +22,10 @@ import com.candlelabs.inventory.util.FXUtil;
 import com.candlelabs.inventory.util.ValidatorUtil;
 import com.jfoenix.controls.JFXButton;
 import java.util.Optional;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.paint.Color;
@@ -40,7 +44,7 @@ public class ProductContainer {
     
     @FXML
     private JFXTextField nameTF, descriptionTF, unitPriceTF, 
-            brandTF, reorderLevelTF, unitsInStockTF;
+            brandTF, reorderLevelTF, unitsInStockTF, productNameTF, productDescriptionTF;
     
     @FXML
     private JFXButton submitB;
@@ -50,7 +54,7 @@ public class ProductContainer {
     private ObservableList<Measurement> measurements = FXCollections.observableArrayList();
     
     @FXML
-    private JFXComboBox<Category> categoryCB;
+    private JFXComboBox<Category> categoryCB, productCategoryCB;
     private ObservableList<Category> categories = FXCollections.observableArrayList();
     
     @FXML
@@ -74,7 +78,83 @@ public class ProductContainer {
         
         this.products = FXCollections.observableArrayList();
         
-        this.productsTV.setItems(this.products);
+        FilteredList<Product> filteredData = new FilteredList<>(
+                this.products, (Product product) -> true);
+
+        this.productNameTF.textProperty().addListener((observable, oldValue, word) -> {
+            
+            filteredData.setPredicate((Product product) -> {
+                
+                this.productsTV.getSelectionModel().clearSelection();
+                this.validator.clearFields();
+                
+                if (word == null || word.isEmpty()) {
+                    return true;
+                }
+                
+                String lowerWord = word.toLowerCase();
+                
+                if (product.getName().toLowerCase().contains(lowerWord)) {
+                    
+                    return true;
+                    
+                } else if (product.getId().toString().toLowerCase().contains(lowerWord)) {
+                    
+                    return true;
+                    
+                }
+                
+                return false;
+                
+            });
+            
+        });
+        
+        this.productDescriptionTF.textProperty().addListener((observable, oldValue, word) -> {
+            
+            filteredData.setPredicate((Product product) -> {
+                
+                this.productsTV.getSelectionModel().clearSelection();
+                this.validator.clearFields();
+                
+                if (word == null || word.isEmpty()) {
+                    return true;
+                }
+                
+                String lowerWord = word.toLowerCase();
+                
+                return product.getDescription().toLowerCase().contains(lowerWord);
+                
+            });
+            
+        });
+        
+        this.productCategoryCB.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    
+                    filteredData.setPredicate((Product product) -> {
+                        
+                        this.productsTV.getSelectionModel().clearSelection();
+                        this.validator.clearFields();
+                        
+                        if (newValue == null || newValue.getName().isEmpty()) {
+                            return true;
+                        }
+                        
+                        String lowerWord = newValue.getName().toLowerCase();
+                        
+                        return product.getCategory().getName().toLowerCase().contains(lowerWord);
+                        
+                    });
+                    
+                });
+        
+
+        SortedList<Product> sortedList = new SortedList<>(filteredData);
+        
+        sortedList.comparatorProperty().bind(productsTV.comparatorProperty());
+        
+        this.productsTV.setItems(sortedList);
         this.products.addAll(products);
         
         if (!this.products.isEmpty()) {
@@ -106,6 +186,7 @@ public class ProductContainer {
         this.suppliers.setAll(suppliers);
         this.measurements.setAll(measurements);
         
+        this.productCategoryCB.setItems(this.categories);
         this.categoryCB.setItems(this.categories);
         this.supplierCB.setItems(this.suppliers);
         this.measurementCB.setItems(this.measurements);

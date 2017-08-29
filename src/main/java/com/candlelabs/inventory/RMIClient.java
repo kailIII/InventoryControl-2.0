@@ -19,9 +19,6 @@ public class RMIClient extends Application {
     public void start(Stage stage) throws Exception {
         
         String url = "/view/login/Login.fxml";
-//        String url = "/view/mastermind/Mastermind.fxml";
-//        String url = "/view/category/Category.fxml";
-//        String url = "/view/measurement/Measurement.fxml";
         
         Parent root = FXMLLoader.load(getClass().getResource(url));
         
@@ -46,8 +43,9 @@ public class RMIClient extends Application {
         } catch (RemoteException ex) {
             
             System.out.println("Exception: " + ex.toString());
-            
             System.out.println("Unable to connect to server");
+            
+            System.exit(0);
             
         }
         
