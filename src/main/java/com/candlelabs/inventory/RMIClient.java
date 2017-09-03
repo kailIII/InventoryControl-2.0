@@ -25,6 +25,7 @@ public class RMIClient extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
+        stage.setResizable(false);
         stage.setTitle("Inventory Control 2.0");
         stage.setScene(scene);
         stage.show();

@@ -22,8 +22,6 @@ import com.candlelabs.inventory.util.FXUtil;
 import com.candlelabs.inventory.util.ValidatorUtil;
 import com.jfoenix.controls.JFXButton;
 import java.util.Optional;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Alert;
@@ -86,6 +84,7 @@ public class ProductContainer {
             filteredData.setPredicate((Product product) -> {
                 
                 this.productsTV.getSelectionModel().clearSelection();
+                
                 this.validator.clearFields();
                 
                 if (word == null || word.isEmpty()) {

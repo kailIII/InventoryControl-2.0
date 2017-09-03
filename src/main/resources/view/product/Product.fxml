@@ -74,11 +74,11 @@
                                                                                 <HBox alignment="BASELINE_CENTER" prefHeight="35.0" prefWidth="183.0" spacing="5.0">
                                                                                     <children>
                                                                                         <Label text="Categoría:" />
-                                                                  <JFXComboBox fx:id="productCategoryCB" focusColor="#41a9ff" prefHeight="25.0" prefWidth="135.0" promptText="Buscar por ">
-                                                                     <HBox.margin>
-                                                                        <Insets />
-                                                                     </HBox.margin>
-                                                                  </JFXComboBox>
+                                                                                        <JFXComboBox fx:id="productCategoryCB" focusColor="#41a9ff" prefHeight="25.0" prefWidth="135.0" promptText="Buscar por ">
+                                                                                            <HBox.margin>
+                                                                                                <Insets />
+                                                                                            </HBox.margin>
+                                                                                        </JFXComboBox>
                                                                                     </children>
                                                                                     <VBox.margin>
                                                                                         <Insets right="25.0" />

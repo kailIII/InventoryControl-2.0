@@ -12,12 +12,19 @@ public class MastermindContainer {
     @FXML
     private AnchorPane productPane;
     
+    @FXML
+    private AnchorPane transferPane;
+    
     public MastermindContainer() {
         
     }
 
     public AnchorPane getProductPane() {
         return productPane;
+    }
+
+    public AnchorPane getTransferPane() {
+        return transferPane;
     }
     
     

@@ -63,7 +63,7 @@ Mastermind
 							 - new Adjust();
 						   }
 				 - 
-				 - 				
+				 - 
 
 	TRANSFERENCIAS:
         
@@ -77,7 +77,7 @@ Mastermind
 		 - Implementar un buscador seg�n:
 			 - Fecha
 			 - Tienda (from, to)
-
+                         
 	Visualizar transferencias - p. ej. TableView
 
 		 - Transferencias creadas anteriormente
@@ -99,9 +99,8 @@ Mastermind
         */
 	
 	INVENTARIO:
-
-	Visualizar el inventario de todas las tiendas
-		 - StoreProductService
+            Visualizar el inventario de todas las tiendas
+		 - StoreProductService 
 
         AJUSTES:
             Visualizar ajustes de inventario
@@ -128,8 +127,6 @@ Store
                 No aceptada
                 Inconsistencia
 
-        
-        
         
 StoreHouse
 

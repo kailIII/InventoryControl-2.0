@@ -15,8 +15,6 @@ import com.candlelabs.inventory.rmi.interfaces.service.MessageResponder;
 import com.candlelabs.inventory.rmi.interfaces.service.ServerResponder;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 
 /**
@@ -40,7 +38,6 @@ public class CallbackClientImpl extends UnicastRemoteObject
         this.server = serverResponder;
         this.name = name;
     }
-    
     
     public void initMastermind(MastermindController controller) {
         this.mastermindController = controller;
@@ -84,7 +81,8 @@ public class CallbackClientImpl extends UnicastRemoteObject
     }
     
     @Override
-    public void productAction(Product product, String action, int index) throws RemoteException {
+    public void productAction(
+            Product product, String action, int index) throws RemoteException {
         
         Platform.runLater(() -> {
             
@@ -97,9 +95,9 @@ public class CallbackClientImpl extends UnicastRemoteObject
                 CategoryController categoryCtrl = 
                         productCtrl
                                 .getCategoryController();
-
+                
                 if (action.equalsIgnoreCase("create")) {
-
+                    
                     try {
                         
                         productCtrl
@@ -160,7 +158,8 @@ public class CallbackClientImpl extends UnicastRemoteObject
     }
     
     @Override
-    public void categoryAction(Category category, String action, int index) throws RemoteException {
+    public void categoryAction(
+            Category category, String action, int index) throws RemoteException {
         
         Platform.runLater(() -> {
             
@@ -311,7 +310,7 @@ public class CallbackClientImpl extends UnicastRemoteObject
         Platform.runLater(() -> {
             
             if (mastermindController != null) {
-
+                
                 ProductController productCtrl =
                         mastermindController
                                 .getProductController();

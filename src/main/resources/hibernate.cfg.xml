@@ -60,6 +60,9 @@ Contributor(s):
         <mapping class="com.candlelabs.inventory.model.UserStoreId"/>
         <mapping class="com.candlelabs.inventory.model.TypeStore"/>
         
+        <mapping class="com.candlelabs.inventory.model.Transfer"/>
+        <mapping class="com.candlelabs.inventory.model.Status"/>
+        
         <mapping class="com.candlelabs.inventory.model.Store"/>
         <mapping class="com.candlelabs.inventory.model.Product"/>
         <mapping class="com.candlelabs.inventory.model.StoreProduct"/>

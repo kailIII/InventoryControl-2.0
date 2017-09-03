@@ -19,7 +19,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *

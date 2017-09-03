@@ -182,10 +182,6 @@ public class GenericDaoHibernateImpl<T, PK extends Serializable>
         
         try {
             
-            System.out.println(this.clazz.getName());
-            
-            System.out.println(session == null);
-            
             list = session.createCriteria(this.clazz).list();
             
             transaction.commit();

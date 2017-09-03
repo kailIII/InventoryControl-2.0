@@ -11,6 +11,7 @@ import com.candlelabs.inventory.controller.interfaces.MastermindInitializer;
 import com.candlelabs.inventory.controller.interfaces.StoreSelectionInitializer;
 
 import com.candlelabs.inventory.controller.product.ProductController;
+import com.candlelabs.inventory.controller.transfer.TransferController;
 import com.candlelabs.inventory.controller.store.selection.StoreSelectionController;
 
 import com.candlelabs.inventory.model.Store;
@@ -26,7 +27,9 @@ import java.rmi.RemoteException;
 public class MastermindController extends MastermindContainer 
         implements Initializable, StoreSelectionInitializer {
     
+    // Has
     private ProductController productController;
+    private TransferController transferController;
     private StoreSelectionController storeSelectionController; 
     
     private CallbackClientImpl client;
@@ -67,6 +70,10 @@ public class MastermindController extends MastermindContainer
         this.productController = this.initView(
                 "/view/product/Product.fxml", 
                 ProductController.class, this.getProductPane());
+        
+        this.transferController = this.initView(
+                "/view/transfer/Transfer.fxml", 
+                TransferController.class, this.getTransferPane());
         
     }
     
